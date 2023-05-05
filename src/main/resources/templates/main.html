@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns xmlns:th="http://www.w3.org/1999/xhtml" : th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여호수아 출석 체크 시스템</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/app.css?after">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- GoogleFonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <!-- GoogleIcons -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<body style="background-color: #a2d2ff" class="pt-5">
+<!--상단 네비게이션 바-->
+<nav id="mainNavbar" class="navbar navbar-dark navbar-expand-md px-3 py-2 fixed-top">
+    <a href="#" class="navbar-brand">JOSHUA</a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navLinks" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navLinks">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <!-- <span class="material-symbols-outlined">
+                    space_dashboard
+                </span> -->
+                <a href="/attendanceCheck" class="nav-link">출석체크</a>
+            </li>
+            <li class="nav-item">
+                <!-- <span class="material-symbols-outlined">
+                    leaderboard
+                </span> -->
+                <a href="/attendanceStatus" class="nav-link">출석현황</a>
+            </li>
+            <li class="nav-item">
+                <!-- <span class="material-symbols-outlined">
+                    description
+                </span> -->
+                <a href="/minutes" class="nav-link">회의록</a>
+            </li>
+            <li class="nav-item">
+                <!-- <span class="material-symbols-outlined">
+                    description
+                </span> -->
+                <a href="/board/main" class="nav-link">게시판</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!--회원추가 모달창-->
+<div class="container-fluid">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#memberAddModal"
+            data-bs-whatever="@getbootstrap">회원 추가</button>
+
+    <div class="modal fade" id="memberAddModal" tabindex="-1" aria-labelledby="memberAddModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="memberAddModalLabel">회원 추가</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!--th:action에는 post 요청으로 /addMemberPost url 주소를 보낸다. -->
+                    <form action="" method="post" class="m-3" th:action="@{addMemberPost}" id="addMemberForm">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="memberName" class="form-label">이름</label>
+                                <input type="text" class="form-control" id="memberName" name="name" placeholder="이름" required>
+                            </div>
+                            <div class="col">
+                                <label for="memberAge" class="form-label">나이</label>
+                                <input type="number" class="form-control" id="memberAge" name="age" placeholder="나이">
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="groupName" class="form-label">조이름</label>
+                            <select name="groupName" class="form-select" id="groupName" required>
+                                <option selected>조 이름을 선택해주세요.</option>
+                                <option value="사라조">사라조</option>
+                                <option value="찬혁조">찬혁조</option>
+                                <option value="희준조">희준조</option>
+                                <option value="새가족">새가족</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+<!--                            radio btn 에서는 실제 DB에 들어가는 값은 value 이며 Mapper와 연결할 대는 둘다 동일하게 name을 작성해준다.-->
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="genderSelect1" value="남자">
+                                <label class="form-check-label" for="genderSelect1">남자</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="genderSelect2" value="여자">
+                                <label class="form-check-label" for="genderSelect2">여자</label>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="submit" class="btn btn-primary" form="addMemberForm">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---->
+<!--th:field="*{member}" th:value="${member}"-->
+<!--th:for="${#ids.prev('member.id')}"-->
+<div class="container-fluid text-center">
+    <h2>사라조</h2>
+    <div class="row" >
+        <div class="col-3" th:each="member : ${getMember}">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" th:field="*{getMember}" th:value="${member.name}" >
+                <label class="form-check-label" th:for="${#ids.seq('getMember')}" th:text="${member.name}">
+                    <script>
+                        let test = document.querySelector(".form-check-input[type='checkbox']");
+                        console.log(test);
+                    </script>
+<!--                    [[${member.name}]]-->
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+<!-- Custom JS -->
+<script src="../static/main.js"></script>
+<!-- jQuery JS -->
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+</body>
+
+</html>
