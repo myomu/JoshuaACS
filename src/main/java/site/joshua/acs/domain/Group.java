@@ -2,7 +2,6 @@ package site.joshua.acs.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-
 import static jakarta.persistence.FetchType.*;
 
 @Entity
@@ -19,4 +18,8 @@ public class Group {
 
     @OneToOne(mappedBy = "group", fetch = LAZY)
     private Member member;
+
+    public void createGroup(String group_name) {
+        this.group_name = group_name;
+    }
 }

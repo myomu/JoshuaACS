@@ -2,8 +2,6 @@ package site.joshua.acs.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.cglib.core.Local;
-
 import java.time.LocalDateTime;
 
 @Entity

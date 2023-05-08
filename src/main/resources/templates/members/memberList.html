@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>회원명단</title>
+</head>
+<body>
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>이름</th>
+            <th>나이</th>
+            <th>성별</th>
+            <th>조이름</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="list :${members}">
+            <td>[[${list.name}]]</td>
+            <td>[[${list.age}]]</td>
+            <td>[[${list.gender}]]</td>
+            <td>[[${list.group}]]</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

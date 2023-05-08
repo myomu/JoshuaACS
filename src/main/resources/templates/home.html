@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div class="jumbotron">
+        <h1>JOSHUA ACS</h1>
+        <p class="lead">출석체크</p>
+        <p>
+            <a class="btn btn-lg btn-secondary" href="/attendanceCheck">출석체크</a>
+        </p>
+
+        <p class="lead">회원명단</p>
+        <p>
+            <a class="btn btn-lg btn-dark" href="/members">회원명단</a>
+        </p>
+
+        <p class="lead">출석현황</p>
+        <p>
+            <a class="btn btn-lg btn-dark" href="/attendanceStatus">출석현황</a>
+        </p>
+
+        <p class="lead">회의록</p>
+        <p>
+            <a class="btn btn-lg btn-info" href="/minutes">회의록</a>
+        </p>
+
+        <p class="lead">게시판</p>
+        <p>
+            <a class="btn btn-lg btn-info" href="/boards">게시판</a>
+        </p>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>

@@ -2,9 +2,7 @@ package site.joshua.acs.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-
 import java.time.LocalDateTime;
-
 import static jakarta.persistence.FetchType.*;
 
 @Entity
