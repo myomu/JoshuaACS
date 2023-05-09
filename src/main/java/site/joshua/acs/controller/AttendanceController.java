@@ -29,7 +29,7 @@ public class AttendanceController {
         return "attendance/attendanceCheck";
     }
 
-    //출석체크 DB로 보내는 과정 해결 안됨.
+    //출석체크 DB로 보내는 과정 해결 안됨..
     @PostMapping("/attendanceCheck/new")
     public String create(@RequestParam("memI") List<String> attendances) {
 
