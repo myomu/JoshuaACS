@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import site.joshua.acs.domain.Attendance;
+import site.joshua.acs.domain.AttendanceStatus;
 import site.joshua.acs.domain.Member;
 import site.joshua.acs.service.AttendanceService;
 import site.joshua.acs.service.MemberService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -29,13 +31,19 @@ public class AttendanceController {
         return "attendance/attendanceCheck";
     }
 
-    //출석체크 DB로 보내는 과정 해결 안됨.
     @PostMapping("/attendanceCheck/new")
-    public String create(@RequestParam("memI") List<String> attendances) {
+    public String create(@RequestParam("id") List<Long> memberIds) {
 
-        for (String attendance : attendances) {
-            System.out.println("attendance = " + attendance);
-            //attendanceService.addAttendance(attendance);
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        for (Long memberId : memberIds) {
+            System.out.println("attendance = " + memberId); //데이터 받아오는 것 체크용.
+            Attendance attendance = new Attendance();
+            Member member = new Member();
+            member.setMemberId(memberId);
+
+            attendance.createAttendance(member, AttendanceStatus.ATTENDANCE, localDateTime);
+            attendanceService.addAttendance(attendance);
         }
         return "redirect:/";
     }

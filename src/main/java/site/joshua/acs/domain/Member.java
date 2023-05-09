@@ -34,4 +34,8 @@ public class Member {
         this.gender = gender;
         this.group = group;
     }
+
+    public void setMemberId(Long id) {
+        this.id = id;
+    }
 }

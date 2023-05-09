@@ -22,4 +22,10 @@ public class Attendance {
 
     private LocalDateTime attendance_date;
 
+    public void createAttendance(Member member, AttendanceStatus status, LocalDateTime attendance_date) {
+        this.member = member;
+        this.status = status;
+        this.attendance_date= attendance_date;
+    }
+
 }
