@@ -49,7 +49,11 @@ public class MemberController {
         }
 
         Member member = new Member();
-        member.createMember(form.getName(), form.getAge(), form.getGender(), form.getGroup()); //이 부분 수정할것. groupId를 넘겨야하는데 group 객체의 형태로 설계되어 있어 고민이 필요하다..
+        Group group = new Group();
+        group.setGroupId(groupId);
+        //group 객체에 id를 저장할 수 있는 메서드를 만들어두고 파라미터로 받아온 groupId를 저장한 뒤 group 객체를 createMember 로 넘겨준다.
+        member.createMember(form.getName(), form.getAge(), form.getGender(), group);
+
         memberService.join(member);
 
         return "redirect:/attendanceCheck";

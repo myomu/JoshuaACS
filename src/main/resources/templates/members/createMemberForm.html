@@ -1,74 +1,6 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<div class="container-fluid" th:fragment="createMember">-->
-<!--    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#memberAddModal"-->
-<!--            data-bs-whatever="@getbootstrap">회원 추가-->
-<!--    </button>-->
-
-<!--    <div class="modal fade" id="memberAddModal" tabindex="-1" aria-labelledby="memberAddModalLabel" aria-hidden="true">-->
-<!--        <div class="modal-dialog">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h1 class="modal-title fs-5" id="memberAddModalLabel">회원 추가</h1>-->
-<!--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-<!--                    &lt;!&ndash;th:action에는 post 요청으로 /addMemberPost url 주소를 보낸다. &ndash;&gt;-->
-<!--                    <form action="" method="post" class="m-3" th:action="@{/members/new}" id="addMemberForm">-->
-<!--                        <div class="row mb-3">-->
-<!--                            <div class="col">-->
-<!--                                <label for="memberName" class="form-label">이름</label>-->
-<!--                                <input type="text" class="form-control" id="memberName" name="name" placeholder="이름"-->
-<!--                                       required>-->
-<!--                            </div>-->
-<!--                            <div class="col">-->
-<!--                                <label for="memberAge" class="form-label">나이</label>-->
-<!--                                <input type="number" class="form-control" id="memberAge" name="age" placeholder="나이">-->
-<!--                            </div>-->
-
-<!--                        </div>-->
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="groupName" class="form-label">조이름</label>-->
-<!--                            <select name="groupName" class="form-select" id="groupName" required>-->
-<!--                                <option selected>조 이름을 선택해주세요.</option>-->
-<!--                                <option value="사라조">사라조</option>-->
-<!--                                <option value="찬혁조">찬혁조</option>-->
-<!--                                <option value="희준조">희준조</option>-->
-<!--                                <option value="새가족">새가족</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-
-<!--                        <div class="col">-->
-<!--                            &lt;!&ndash; radio btn 에서는 실제 DB에 들어가는 값은 value 이며 Mapper와 연결할 대는 둘다 동일하게 name을 작성해준다.&ndash;&gt;-->
-<!--                            <div class="form-check form-check-inline">-->
-<!--                                <input class="form-check-input" type="radio" name="gender" id="genderSelect1"-->
-<!--                                       value="남자">-->
-<!--                                <label class="form-check-label" for="genderSelect1">남자</label>-->
-<!--                            </div>-->
-<!--                            <div class="form-check form-check-inline">-->
-<!--                                <input class="form-check-input" type="radio" name="gender" id="genderSelect2"-->
-<!--                                       value="여자">-->
-<!--                                <label class="form-check-label" for="genderSelect2">여자</label>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                    </form>-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>-->
-<!--                    <button type="submit" class="btn btn-primary" form="addMemberForm">저장</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--</html>-->
-
-
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header" />
+<head th:replace="~{fragments/header :: header}" />
 <style>
     .fieldError {
         border-color: #bd2130;
@@ -76,7 +8,7 @@
 </style>
 <body>
 <div class="container">
-    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
     <form role="form" action="/members/new" th:object="${memberForm}"
           method="post">
         <div class="form-group mt-3">
@@ -113,7 +45,7 @@
         <button type="submit" class="btn btn-primary mt-3">Submit</button>
     </form>
     <br/>
-    <div th:replace="fragments/footer :: footer" />
+    <div th:replace="~{fragments/footer :: footer}" />
 </div> <!-- /container -->
 </body>
 </html>

@@ -22,4 +22,8 @@ public class Group {
     public void createGroup(String group_name) {
         this.group_name = group_name;
     }
+
+    public void setGroupId(Long groupId) {
+        this.id = groupId;
+    }
 }

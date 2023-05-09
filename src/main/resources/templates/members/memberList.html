@@ -18,10 +18,10 @@
         </thead>
         <tbody>
         <tr th:each="list :${members}">
-            <td>[[${list.name}]]</td>
-            <td>[[${list.age}]]</td>
-            <td>[[${list.gender}]]</td>
-            <td>[[${list.group}]]</td>
+            <td th:text="${list.name}">이름</td>
+            <td th:text="${list.age}">나이</td>
+            <td th:text="${list.gender.description}">성별</td>
+            <td th:text="${list.group.group_name}">조이름</td>
         </tr>
         </tbody>
     </table>
