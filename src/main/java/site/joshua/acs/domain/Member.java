@@ -21,7 +21,7 @@ public class Member {
     @Enumerated(EnumType.STRING) // EnumType
     private Gender gender; // 성별 [MAN, WOMAN]
 
-    @OneToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "group_id") // Foreign Key
     private Group group;
 

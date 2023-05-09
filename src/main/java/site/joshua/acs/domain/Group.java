@@ -2,6 +2,10 @@ package site.joshua.acs.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static jakarta.persistence.FetchType.*;
 
 @Entity
@@ -16,8 +20,8 @@ public class Group {
 
     private String group_name;
 
-    @OneToOne(mappedBy = "group", fetch = LAZY)
-    private Member member;
+    @OneToMany(mappedBy = "group")
+    private List<Member> members = new ArrayList<>();
 
     public void createGroup(String group_name) {
         this.group_name = group_name;
