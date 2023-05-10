@@ -34,7 +34,7 @@ public class GroupController {
         group.createGroup(form.getName());
         groupService.addGroup(group);
 
-        return "redirect:/";
+        return "redirect:/attendances";
     }
 
 }

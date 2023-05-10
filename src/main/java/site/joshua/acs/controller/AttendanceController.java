@@ -23,15 +23,15 @@ public class AttendanceController {
     private final MemberService memberService;
     private final AttendanceService attendanceService;
 
-    @GetMapping("/attendanceCheck")
+    @GetMapping("/attendances")
     public String attendances(Model model) {
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
         model.addAttribute("memberList", new Member());
-        return "attendance/attendanceCheck";
+        return "attendances/attendanceCheck";
     }
 
-    @PostMapping("/attendanceCheck/new")
+    @PostMapping("/attendances/new")
     public String create(@RequestParam("id") List<Long> memberIds) {
 
         LocalDateTime localDateTime = LocalDateTime.now();

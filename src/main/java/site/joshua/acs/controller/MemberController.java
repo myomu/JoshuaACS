@@ -56,7 +56,7 @@ public class MemberController {
 
         memberService.join(member);
 
-        return "redirect:/attendanceCheck";
+        return "redirect:/attendances";
     }
 
     @ModelAttribute("genderTypes")
