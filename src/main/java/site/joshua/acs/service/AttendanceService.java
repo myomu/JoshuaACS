@@ -8,6 +8,7 @@ import site.joshua.acs.domain.Member;
 import site.joshua.acs.repository.AttendanceRepository;
 import site.joshua.acs.repository.MemberRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,11 +24,15 @@ public class AttendanceService {
         return attendance.getId();
     }
 
-    public List<Attendance> findMembers() {
+    public List<Attendance> findAttendances() {
         return attendanceRepository.findAll();
     }
 
     public Attendance findOne(Long attendanceId) {
         return attendanceRepository.findOne(attendanceId);
+    }
+
+    public List<LocalDateTime> findNoDuplicateDate() {
+        return attendanceRepository.findNoDuplicateDate();
     }
 }

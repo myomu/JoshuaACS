@@ -13,6 +13,8 @@
             </div>
         </div>
     </div>
+    <br/>
+    <p>출석인원</p>
     <form role="form" action="attendances/new" th:object="${memberList}" method="post">
         <div class="row" >
             <div class="col">
@@ -23,9 +25,17 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        <button type="submit" class="btn btn-primary mt-3">저장</button>
     </form>
-    <br>
+    <br/>
+
+
+    <!--여기에 출석 리스트를 표시 -->
+
+
+
+
+    <br/>
     <div th:replace="~{fragments/footer :: footer}"></div>
 </div> <!-- /container -->
 <script>
