@@ -33,4 +33,10 @@ public class AttendanceRepository {
                 .getResultList();
     }
 
+    public List<Attendance> findAllByDateTime(LocalDateTime dateTime) {
+        return em.createQuery("select a from Attendance a where a.attendance_date = :dateTime", Attendance.class)
+                .setParameter("dateTime", dateTime)
+                .getResultList();
+    }
+
 }

@@ -3,15 +3,14 @@ package site.joshua.acs.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import site.joshua.acs.domain.Attendance;
 import site.joshua.acs.domain.AttendanceStatus;
+import site.joshua.acs.domain.Group;
 import site.joshua.acs.domain.Member;
 import site.joshua.acs.dto.AttendanceStatusDTO;
 import site.joshua.acs.service.AttendanceService;
+import site.joshua.acs.service.GroupService;
 import site.joshua.acs.service.MemberService;
 
 import java.time.LocalDateTime;
@@ -24,12 +23,17 @@ public class AttendanceController {
 
     private final MemberService memberService;
     private final AttendanceService attendanceService;
+    private final GroupService groupService;
 
     @GetMapping("/attendances")
     public String attendances(Model model) {
         List<Member> members = memberService.findMembers();
+        List<Group> groups = groupService.findGroups();
+
         model.addAttribute("members", members);
         model.addAttribute("memberList", new Member());
+        model.addAttribute("groups", groups);
+
         return "attendances/attendanceCheck";
     }
 
@@ -47,7 +51,7 @@ public class AttendanceController {
             attendance.createAttendance(member, AttendanceStatus.ATTENDANCE, localDateTime);
             attendanceService.addAttendance(attendance);
         }
-        return "redirect:/";
+        return "redirect:/attendances";
     }
 
     @GetMapping("/attendances/status")
@@ -76,4 +80,15 @@ public class AttendanceController {
 
         return "attendances/attendanceStatus";
     }
+
+    @GetMapping("/attendances/{dateTime}/edit")
+    public String editAttendances(Model model, @PathVariable("dateTime") LocalDateTime dateTime) {
+
+        List<Attendance> attendancesByDateTime = attendanceService.findAttendancesByDateTime(dateTime);
+
+        model.addAttribute("members", attendancesByDateTime);
+        return "attendances/editAttendanceForm";
+    }
+
+
 }

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import site.joshua.acs.domain.Member;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -24,6 +25,16 @@ public class MemberRepository {
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
+    }
+
+    public List<Member> findAllByGroupId(Long groupId) {
+        return em.createQuery("select m from Member m where m.group.id = :groupId", Member.class)
+                .setParameter("groupId", groupId)
+                .getResultList();
+    }
+
+    public void delete(Member member) {
+        em.remove(member);
     }
 
 }

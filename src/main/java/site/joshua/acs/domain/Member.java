@@ -25,10 +25,17 @@ public class Member {
     @JoinColumn(name = "group_id") // Foreign Key
     private Group group;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Attendance> attendances = new ArrayList<>();
 
     public void createMember(String name, int age, Gender gender, Group group) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.group = group;
+    }
+
+    public void editMember(String name, int age, Gender gender, Group group) {
         this.name = name;
         this.age = age;
         this.gender = gender;

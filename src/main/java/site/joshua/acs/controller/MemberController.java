@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import site.joshua.acs.domain.Gender;
 import site.joshua.acs.domain.Group;
 import site.joshua.acs.domain.Member;
@@ -42,7 +39,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(@Valid MemberForm form, @RequestParam("groupId") Long groupId, BindingResult result) {
+    public String createMember(@Valid MemberForm form, @RequestParam("groupId") Long groupId, BindingResult result) {
 
         if (result.hasErrors()) {
             return "members/createMemberForm";
@@ -57,6 +54,40 @@ public class MemberController {
         memberService.join(member);
 
         return "redirect:/attendances";
+    }
+
+    @GetMapping("/members/{memberId}/edit")
+    public String editMemberForm(Model model, @PathVariable("memberId") Long memberId) {
+
+        Member member = memberService.findOne(memberId);
+        List<Group> groups = groupService.findGroups();
+
+        MemberForm form = new MemberForm();
+        form.setName(member.getName());
+        form.setAge(member.getAge());
+        form.setGender(member.getGender());
+        form.setGroup(member.getGroup());
+
+        model.addAttribute("memberForm", form);
+        model.addAttribute("groups", groups);
+
+        return "members/editMemberForm";
+    }
+
+    @PostMapping("/members/{memberId}/edit")
+    public String editMember(@PathVariable("memberId") Long memberId, @RequestParam("groupId") Long groupId, @ModelAttribute("memberForm") MemberForm form) {
+
+        Group group = new Group();
+        group.setGroupId(groupId);
+
+        memberService.editMember(memberId, form.getName(), form.getAge(), form.getGender(), group);
+        return "redirect:/members";
+    }
+
+    @PostMapping("/members/{memberId}/delete")
+    public String deleteMember(@PathVariable("memberId") Long memberId) {
+        memberService.deleteMember(memberId);
+        return "redirect:/members";
     }
 
     @ModelAttribute("genderTypes")

@@ -28,4 +28,10 @@ public class Attendance {
         this.attendance_date= attendance_date;
     }
 
+    public void editAttendance(Member member, AttendanceStatus status, LocalDateTime attendance_date) {
+        this.member = member;
+        this.status = status;
+        this.attendance_date= attendance_date;
+    }
+
 }

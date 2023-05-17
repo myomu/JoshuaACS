@@ -20,10 +20,14 @@ public class Group {
 
     private String group_name;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Member> members = new ArrayList<>();
 
     public void createGroup(String group_name) {
+        this.group_name = group_name;
+    }
+
+    public void editGroup(String group_name) {
         this.group_name = group_name;
     }
 

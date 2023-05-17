@@ -27,4 +27,8 @@ public class GroupRepository {
                 .getResultList();
     }
 
+    public void delete(Group group) {
+        em.remove(group);
+    }
+
 }

@@ -14,14 +14,19 @@ import site.joshua.acs.domain.Group;
 import site.joshua.acs.domain.Member;
 import site.joshua.acs.service.MemberService;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemberRepositoryTest {
 
-    @Autowired MemberService memberService;
-    @Autowired MemberRepository memberRepository;
+    @Autowired
+    MemberService memberService;
+    @Autowired
+    MemberRepository memberRepository;
+
     @Test
     @DisplayName("동일한 멤버인지 체크")
     @Transactional
@@ -30,7 +35,7 @@ class MemberRepositoryTest {
         Member member = new Member();
         Group group = new Group();
 
-        member.createMember("memberA", 20, Gender.MAN,  null);
+        member.createMember("memberA", 20, Gender.MAN, null);
 
         //when
         //memberRepository.save(member);
@@ -47,5 +52,14 @@ class MemberRepositoryTest {
         assertThat(saveId).isEqualTo(1L);
 
 
+    }
+
+    @Test
+    @DisplayName("groupId로 member 찾기")
+    void findAllMemberByGroupId() {
+        List<Member> members = memberService.findMembersByGroupId(53L);
+        for (Member member : members) {
+            System.out.println("member = " + member.getName() + " group_id= " + member.getGroup().getId());
+        }
     }
 }

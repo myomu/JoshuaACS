@@ -35,4 +35,8 @@ public class AttendanceService {
     public List<LocalDateTime> findNoDuplicateDate() {
         return attendanceRepository.findNoDuplicateDate();
     }
+
+    public List<Attendance> findAttendancesByDateTime(LocalDateTime dateTime) {
+        return attendanceRepository.findAllByDateTime(dateTime);
+    }
 }

@@ -12,29 +12,20 @@
         <table class="table table-hover text-center">
             <thead>
             <tr>
-                <th>날짜</th>
-                <th>출석인원</th>
-                <th>총 인원</th>
+                <th>ID</th>
+                <th>조 이름</th>
                 <th>관리</th>
             </tr>
             </thead>
-            <th:block th:each="ats :${atsDTO}">
-<!--            <th:block th:each="date, count :${attendanceDateList}">-->
+            <th:block th:each="group :${groups}">
                 <tbody>
                 <tr>
-                    <td th:text="${#temporals.format(ats.datetime, 'yyyy-MM-dd HH:mm:ss')}">날짜</td>
+                    <td th:text="${group.id}">ID</td>
+                    <td th:text="${group.group_name}">조 이름</td>
                     <td>
-                        <div class="row row-cols-auto">
-                            <th:block th:each="list :${attendanceList}" th:if="${list.attendance_date == ats.datetime}">
-                                <div class="col" th:text="${list.member.name}"></div>
-                            </th:block>
-                        </div>
-                    </td>
-                    <td th:text="${ats.count}">총 인원</td>
-                    <td>
-                        <a class="btn btn-primary" href="#" th:href="@{/attendances/{attendanceDate}/edit (attendanceDate=${ats.datetime})}" role="button">수정</a>
+                        <a class="btn btn-primary" href="#" th:href="@{/groups/{groupId}/edit (groupId=${group.id})}" role="button">수정</a>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" th:attr="onclick='setDate(\'' + ${ats.datetime} + '\')'">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" th:onclick="'javascript:setId(' + ${group.id} + ')'">
                             삭제
                         </button>
                         <!-- Modal -->
@@ -52,7 +43,8 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                        <button type="button" class="btn btn-outline-danger" th:onclick="'javascript:test()'">삭제</button>
+                                        <button type="button" class="btn btn-outline-danger" th:onclick="'javascript:deleteGroup()'">삭제</button>
+<!--                                        'javascript:test(\'' + ${group.id} + '\')'-->
                                     </div>
                                 </div>
                             </div>
@@ -62,30 +54,36 @@
                 </tbody>
             </th:block>
         </table>
-
     </section>
+
+
     <br/>
     <div th:replace="~{fragments/footer :: footer}"></div>
 </div> <!-- /container -->
 
 <script>
-    let attendanceDate;
+    // document.querySelector("#delete-button").onclick = function () {
+    //     let test = /*[[${group}]]*/ 'test';
+    //     alert(test);
+    // };
+
+    //전역변수로 설정하고 삭제 버튼 클릭시 여기에 setID 함수를 이용하여 저장. 토글창의 삭제 버튼에선 id 값이 정상적으로 출력이 안됨으로 이렇게 변수에 값을 저장하여 사용.
+    let groupId = 0;
     function test() {
-        alert(attendanceDate);
+        alert(groupId);
     }
 
-    function setDate(date) {
-        attendanceDate = date;
+    function setId(id) {
+        groupId = id;
     }
 
-    function deleteAttendance() {
+    function deleteGroup() {
         let form = document.createElement('form');
         form.setAttribute("method", "post");
-        form.setAttribute("action", "/attendances/" + attendanceDate + "/delete");
+        form.setAttribute("action", "/groups/" + groupId + "/delete");
         document.body.appendChild(form);
         form.submit();
     }
 </script>
-
 </body>
 </html>
