@@ -45,4 +45,8 @@ public class Member {
     public void setMemberId(Long id) {
         this.id = id;
     }
+
+    public void setAttendances(List<Attendance> attendances) {
+        this.attendances = attendances;
+    }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import site.joshua.acs.domain.Attendance;
+import site.joshua.acs.domain.Group;
 import site.joshua.acs.domain.Member;
 
 import java.time.LocalDateTime;
@@ -37,6 +38,10 @@ public class AttendanceRepository {
         return em.createQuery("select a from Attendance a where a.attendance_date = :dateTime", Attendance.class)
                 .setParameter("dateTime", dateTime)
                 .getResultList();
+    }
+
+    public void delete(Attendance attendance) {
+        em.remove(attendance);
     }
 
 }

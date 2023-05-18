@@ -39,4 +39,11 @@ public class AttendanceService {
     public List<Attendance> findAttendancesByDateTime(LocalDateTime dateTime) {
         return attendanceRepository.findAllByDateTime(dateTime);
     }
+
+    @Transactional
+    public Long deleteAttendance(Long attendanceId) {
+        Attendance attendance = attendanceRepository.findOne(attendanceId);
+        attendanceRepository.delete(attendance);
+        return attendance.getId();
+    }
 }
