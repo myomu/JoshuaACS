@@ -17,7 +17,7 @@ public class GroupController {
 
     private final GroupService groupService;
 
-    @GetMapping("groups/new")
+    @GetMapping("/groups/new")
     public String createForm(Model model) {
         model.addAttribute("groupForm", new GroupForm());
         return "groups/createGroupForm";
