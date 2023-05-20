@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name = "groups")
+@Table(name = "joshua_groups")
 public class Group {
 
     @Id
