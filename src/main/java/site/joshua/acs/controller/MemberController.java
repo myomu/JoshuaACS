@@ -28,7 +28,7 @@ public class MemberController {
         return "members/memberList";
     }
 
-    @GetMapping("/members/new")
+    @GetMapping("members/new")
     public String createForm(Model model) {
 
         List<Group> groups = groupService.findGroups();
