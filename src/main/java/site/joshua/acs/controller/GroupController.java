@@ -20,7 +20,7 @@ public class GroupController {
     @GetMapping("/groups/new")
     public String createForm(Model model) {
         model.addAttribute("groupForm", new GroupForm());
-        return "/groups/createGroupForm";
+        return "groups/createGroupForm";
     }
 
     @PostMapping("/groups/new")

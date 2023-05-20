@@ -35,7 +35,7 @@ public class MemberController {
 
         model.addAttribute("memberForm", new MemberForm());
         model.addAttribute("groups",groups);
-        return "/members/createMemberForm";
+        return "members/createMemberForm";
     }
 
     @PostMapping("/members/new")
