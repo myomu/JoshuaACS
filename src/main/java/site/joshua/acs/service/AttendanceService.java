@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.joshua.acs.domain.Attendance;
-import site.joshua.acs.domain.Member;
 import site.joshua.acs.repository.AttendanceRepository;
-import site.joshua.acs.repository.MemberRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

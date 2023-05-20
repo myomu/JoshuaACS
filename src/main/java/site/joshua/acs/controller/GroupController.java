@@ -7,10 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import site.joshua.acs.domain.Group;
-import site.joshua.acs.domain.Member;
 import site.joshua.acs.service.GroupService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

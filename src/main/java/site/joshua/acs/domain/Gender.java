@@ -1,10 +1,5 @@
 package site.joshua.acs.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
-
 public enum Gender {
     MAN("남자"), WOMAN("여자");
 
