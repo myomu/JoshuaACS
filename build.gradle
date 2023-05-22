@@ -29,15 +29,22 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// p6spy 로그 확인용
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
+
 	// H2 DB 연결용
 	runtimeOnly 'com.h2database:h2'
 
 	// MySQL 연결용
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
-//	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0")
+	// AWS S3 Connection
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+	implementation "com.amazonaws:aws-java-sdk-s3:1.12.281"
+
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+

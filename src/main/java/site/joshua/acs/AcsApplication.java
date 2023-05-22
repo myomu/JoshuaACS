@@ -9,6 +9,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 public class AcsApplication {
 
+	// EC2 에서 시간을 계속 UTC 로 표시하기에 타임존을 한국 시간 기준으로 다시 설정.
 	@PostConstruct
 	void started() {
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
