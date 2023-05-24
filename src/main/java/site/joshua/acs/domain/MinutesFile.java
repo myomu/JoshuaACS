@@ -1,11 +1,11 @@
 package site.joshua.acs.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+
 public class MinutesFile {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +14,11 @@ public class MinutesFile {
 
     private String uploadFileName;
     private String storeFileName;
+    private String date;
 
-    public MinutesFile(String uploadFileName, String storeFileName) {
+    public void setMinutesFile(String uploadFileName, String storeFileName, String date) {
         this.uploadFileName = uploadFileName;
         this.storeFileName = storeFileName;
+        this.date = date;
     }
 }

@@ -1,129 +1,193 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head th:replace="~{fragments/header :: header}"></head>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
-</head>
 <body>
 <nav th:replace="~{fragments/nav :: nav}"></nav>
 
 <div class="container">
 
-    <form action="/minutes/new" method="post" enctype="multipart/form-data">
-        <div class="row">
-            <div class="col-8">
-                <div class="mb-3">
-                    <label for="multiFile" class="form-label">회의록 저장</label>
-                    <!--RequestParam으로 넘길 땐 element의 name 속성 값이 중요!-->
-                    <input class="form-control" type="file" id="multiFile" name="file" >
-                    <button type="submit" class="btn btn-primary mt-3">저장</button>
+    <!--회의록 추가 버튼(Modal)-->
+    <button type="button" class="btn btn-primary mt-3 mb-5" data-bs-toggle="modal" data-bs-target="#addMinutesModal">회의록
+        추가
+    </button>
+    <div class="modal fade" id="addMinutesModal" tabindex="-1" aria-labelledby="addMinutesModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addMinutesModalLabel">회의록 파일 저장</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/minutes/new" method="post" enctype="multipart/form-data" id="createMinutesForm">
+                        <div class="mb-3">
+                            <label for="select-date" class="col-form-label">날짜 선택:</label>
+                            <div id="select-date">
+                                <div class="row">
+                                    <div class="col">
+                                        <select class="form-select" id="year" name="year">
+                                            <option selected value="0">년도</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" id="month" name="month">
+                                            <option selected value="0">월</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" id="day" name="day">
+                                            <option selected value="0">일</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="file-name" class="col-form-label">회의록 파일:</label>
+                            <!--RequestParam으로 넘길 땐 element의 name 속성 값이 중요!-->
+                            <input class="form-control" type="file" id="file-name" name="minutesFiles" multiple="multiple" required>
+                        </div>
+<!--                        <div class="mb-3">-->
+<!--                            <label for="message-text" class="col-form-label">내용:</label>-->
+<!--                            <textarea class="form-control" id="message-text" name="contents"></textarea>-->
+<!--                        </div>-->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="submit" class="btn btn-primary" th:onclick="'javascript:storeMinutesFile()'">저장
+                    </button>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 
-<!--    <form th:action="@{/minutes/new}" method="post" enctype="multipart/form-data">-->
-<!--        <ul>-->
-<!--            <li>상품명 <input type="text" name="itemName" ></li>-->
-<!--            <li>첨부파일<input type="file" name="file" ></li>-->
-
-<!--        </ul>-->
-<!--        <input type="submit"/>-->
-<!--    </form>-->
-
-    <!-- Card -->
+    <!--Card List-->
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
+        <div class="col" th:each="minutesFile : ${minutesFiles}">
+            <!-- Card -->
             <div class="card h-100">
-                <img src="https://unsplash.it/600.jpg?image=251" class="card-img-top" alt="..."
-                     data-bs-target="#cardModal" data-bs-toggle="modal">
+                <div class="card-header">
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#deleteModal" th:onclick="'javascript:setId(' + ${minutesFile.id} + ')'">
+                        삭제
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="deleteModalLabel">파일 삭제</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    해당 파일을 삭제하시겠습니까?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <button type="button" class="btn btn-outline-danger" th:onclick="'javascript:deleteFile()'">삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <img th:src="${minutesFile.storeFileName}" class="card-img-top" alt="..."
+                     th:attr="data-bs-target='#modal-'+${minutesFile.id}" data-bs-toggle="modal">
+
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural</p>
+                    <h5 class="card-title" th:text="${minutesFile.uploadFileName}">FileName</h5>
+                    <p class="card-text" th:text="${minutesFile.date}">contentsText</p>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">Last updated 3 mins ago</small>
                 </div>
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="cardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" th:id="'modal-'+${minutesFile.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="${minutesFile.uploadFileName}">
+                                FileName</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <img src="https://unsplash.it/600.jpg?image=251" class="card-img-top" alt="...">
+                            <img th:src="${minutesFile.storeFileName}" class="card-img-top" alt="...">
                         </div>
                         <div class="modal-footer">
-                            <!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-                            <button type="button" class="btn btn-primary">Download</button>
+                            <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+                            <a type="button" class="btn btn-primary" th:href="|/minutes/${minutesFile.id}/download|">다운로드</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://unsplash.it/1200/768.jpg?image=252" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://unsplash.it/1200/768.jpg?image=253" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://unsplash.it/1200/768.jpg?image=254" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://unsplash.it/1200/768.jpg?image=255" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://unsplash.it/1200/768.jpg?image=256" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                </div>
-            </div>
         </div>
     </div>
-</div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</div> <!-- /container -->
 
-<div th:replace="~{fragments/footer :: footer}"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+
 <script>
-    $(document).on('click', '[data-toggle="lightbox"]', function (event) {
-        event.preventDefault();
-        $(this).ekkoLightbox();
-    });
+    function storeMinutesFile() {
+        document.querySelector('#createMinutesForm').submit();
+    }
+
+    // 연도 select option 생성
+    let yearSelect = document.querySelector('#year');
+    let currentYear = new Date().getFullYear();
+    let startYear = currentYear - 10; // 시작 연도
+    let endYear = currentYear + 10; // 끝 연도
+
+    for (let year = startYear; year <= endYear; year++) {
+        let option = document.createElement('option');
+        option.text = year.toString() + '년';
+        option.value = year.toString();
+        yearSelect.appendChild(option);
+    }
+
+    // 월 select option 생성
+    let monthSelect = document.querySelector('#month');
+
+    for (let month = 1; month <= 12; month++) {
+        let option = document.createElement('option');
+        option.text = month.toString() + '월';
+        option.value = month.toString();
+        monthSelect.appendChild(option);
+    }
+
+    // 일 select option 생성
+    let daySelect = document.querySelector('#day');
+
+    for (let day = 1; day <= 31; day++) {
+        let option = document.createElement('option');
+        option.text = day.toString() + '일';
+        option.value = day.toString();
+        daySelect.appendChild(option);
+    }
+
+    // 파일 삭제
+    let fileId = 0;
+    function test() {
+        alert(fileId);
+    }
+
+    function setId(id) {
+        fileId = id;
+    }
+
+    function deleteFile() {
+        let form = document.createElement('form');
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/minutes/" + fileId + "/delete");
+        document.body.appendChild(form);
+        form.submit();
+    }
+
 </script>
 
 </body>

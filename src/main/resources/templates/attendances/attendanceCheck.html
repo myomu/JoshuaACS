@@ -15,6 +15,7 @@
         </div>
     </div>
     <br/>
+    <!--여기에 출석 리스트를 표시 -->
     <p>출석인원</p>
     <form role="form" action="attendances/new" th:object="${memberList}" method="post">
         <th:block th:each="group: ${groups}">
@@ -22,7 +23,7 @@
         <div class="row" >
             <div class="col">
                 <div th:each="member: ${members}" th:if="${member.group.group_name == group.group_name}" class="form-check form-check-inline">
-                    <input type="checkbox" th:field="*{id}" th:value="${member.id}" class="form-check-input">
+                    <input type="checkbox" th:field="*{id}" th:value="${member.id}" class="form-check-input" >
                     <label th:for="${#ids.prev('id')}" class="form-check-label" th:text="${member.name}">이름</label>
                 </div>
             </div>
@@ -31,19 +32,11 @@
         <button type="submit" class="btn btn-primary mt-3" th:onclick="'javascript:alertOK()'">저장</button>
     </form>
     <br/>
-
-
-    <!--여기에 출석 리스트를 표시 -->
-
-
-
-
-    <br/>
     <div th:replace="~{fragments/footer :: footer}"></div>
 </div> <!-- /container -->
 <script>
     function alertOK() {
-        alert("출석체크가 저장되었습니다.")
+        alert("출석체크가 저장되었습니다.") // 이 부분 수정 필요. checkbox required 통과 후 함수가 실행되어야 함.
     }
 </script>
 </body>
