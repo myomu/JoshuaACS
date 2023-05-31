@@ -9,6 +9,8 @@ import site.joshua.acs.domain.AttendanceStatus;
 import site.joshua.acs.domain.Group;
 import site.joshua.acs.domain.Member;
 import site.joshua.acs.dto.AttendanceStatusDTO;
+import site.joshua.acs.form.AttendanceForm;
+import site.joshua.acs.form.MemberForm;
 import site.joshua.acs.service.AttendanceService;
 import site.joshua.acs.service.GroupService;
 import site.joshua.acs.service.MemberService;

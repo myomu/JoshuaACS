@@ -20,5 +20,17 @@
     <!-- Custom JS -->
     <script src="/js/custom.js"></script>
 
+    <!--로그아웃 form post 로 보내는 함수-->
+    <script>
+        function logout() {
+            console.log("logout!!");
+            let logOutForm = document.createElement('form');
+            logOutForm.setAttribute('method', 'post');
+            logOutForm.setAttribute('action', '/logout');
+            document.body.appendChild(logOutForm);
+            logOutForm.submit();
+        }
+    </script>
+
 </div>
 </html>

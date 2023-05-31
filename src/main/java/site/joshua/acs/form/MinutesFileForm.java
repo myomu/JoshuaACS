@@ -1,4 +1,4 @@
-package site.joshua.acs.controller;
+package site.joshua.acs.form;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,4 +1,4 @@
-package site.joshua.acs.controller;
+package site.joshua.acs.form;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

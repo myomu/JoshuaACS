@@ -1,6 +1,7 @@
 package site.joshua.acs.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,14 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    private String email;
-    private String password;
+    @NotEmpty
+    private String loginId; //로그인 아이디
+
+    @NotEmpty
+    private String password; //로그인 패스워드
+
+    @NotEmpty
+    private String userName; //사용자 이름
 
     @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();

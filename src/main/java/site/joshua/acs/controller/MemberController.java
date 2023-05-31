@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import site.joshua.acs.domain.Gender;
 import site.joshua.acs.domain.Group;
 import site.joshua.acs.domain.Member;
+import site.joshua.acs.form.MemberForm;
 import site.joshua.acs.service.GroupService;
 import site.joshua.acs.service.MemberService;
 
