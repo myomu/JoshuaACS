@@ -46,3 +46,6 @@ gen
 
 # Test Folder
 test/
+
+# ignore file ---
+# application.yml

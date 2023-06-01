@@ -3,6 +3,7 @@ package site.joshua.acs;
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import java.util.TimeZone;
 
@@ -14,6 +15,7 @@ public class AcsApplication {
 	void started() {
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(AcsApplication.class, args);
 	}
