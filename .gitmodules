@@ -1,0 +1,3 @@
+[submodule "submodule-joshuaacs"]
+	path = submodule-joshuaacs
+	url = https://github.com/myomu/submodule-joshuaacs
