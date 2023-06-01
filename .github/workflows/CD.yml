@@ -56,11 +56,10 @@ jobs:
      
      # Deploy
       - name: Deploy
-        run: |
-          aws deploy create-deployment \
-          --application-name joshuaacs-project \
-          --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name joshuaacs-prod \
-          --file-exists-behavior OVERWRITE \
-          --s3-location bucket=joshuaacs-project-deploy-bucket,bundleType=zip,key=joshuaacs/$GITHUB_SHA.zip \
-          --region ap-northeast-2 \   
+        run: aws deploy create-deployment
+          --application-name joshuaacs-project
+          --deployment-config-name CodeDeployDefault.AllAtOnce
+          --deployment-group-name joshuaacs-prod
+          --file-exists-behavior OVERWRITE
+          --s3-location bucket=joshuaacs-project-deploy-bucket,bundleType=zip,key=joshuaacs/$GITHUB_SHA.zip
+          --region ap-northeast-2
