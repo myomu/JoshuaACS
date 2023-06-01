@@ -48,3 +48,11 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.register('copyPrivate', Copy) {
+	copy {
+		from('./submodule-joshuaacs')
+		include("*.yml")
+		into('src/main/resources')
+	}
+}
+

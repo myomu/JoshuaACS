@@ -48,4 +48,4 @@ gen
 test/
 
 # ignore file ---
-# application.yml
+application.yml
