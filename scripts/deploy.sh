@@ -1,5 +1,5 @@
 #!/bin/bash
-BUILD_JAR=$(ls /home/ubuntu/action/build/libs/*.jar)
+BUILD_JAR=$(ls /home/ubuntu/action/build/libs/ | grep 'SNAPSHOT.jar')
 JAR_NAME=$(basename $BUILD_JAR)
 echo "> build 파일명: $JAR_NAME" >> /home/ubuntu/action/deploy.log
 
