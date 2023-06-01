@@ -58,9 +58,9 @@ jobs:
       - name: Deploy
         run: |
           aws deploy create-deployment \
-          --application-name cicdtest-project \
+          --application-name joshuaacs-project \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name cicd-test-prod \
+          --deployment-group-name joshuaacs-prod \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=project-bucket-v1,bundleType=zip,key=cicdtest/$GITHUB_SHA.zip \
+          --s3-location bucket=joshuaacs-project-deploy-bucket,bundleType=zip,key=joshuaacs/$GITHUB_SHA.zip \
           --region ap-northeast-2 \   
