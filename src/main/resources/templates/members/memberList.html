@@ -4,60 +4,74 @@
 </head>
 <body>
 <nav th:replace="~{fragments/nav :: nav}"></nav>
-<div class="container">
-    <table class="table table-hover text-center">
-        <thead>
-        <tr>
-            <th>이름</th>
-            <th>나이</th>
-            <th>성별</th>
-            <th>조이름</th>
-            <th>관리</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="member :${members}">
-            <td th:text="${member.name}">이름</td>
-            <td th:text="${member.age}">나이</td>
-            <td th:text="${member.gender.description}">성별</td>
-            <td th:text="${member.group.group_name}">조이름</td>
-            <td>
-                <a class="btn btn-primary" href="#" th:href="@{/members/{memberId}/edit (memberId=${member.id})}" role="button">수정</a>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" th:onclick="'javascript:setId(' + ${member.id} + ')'">
-                    삭제
-                </button>
-                <!-- Modal -->
-                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="deleteModalLabel">회원 삭제</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNav}"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <!-- Contents -->
+                <table class="table table-hover text-center">
+                    <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th>나이</th>
+                        <th>성별</th>
+                        <th>조이름</th>
+                        <th>관리</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="member :${members}">
+                        <td th:text="${member.name}">이름</td>
+                        <td th:text="${member.age}">나이</td>
+                        <td th:text="${member.gender.description}">성별</td>
+                        <td th:text="${member.group.group_name}">조이름</td>
+                        <td>
+                            <a class="btn btn-primary" href="#"
+                               th:href="@{/members/{memberId}/edit (memberId=${member.id})}" role="button">수정</a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal" th:onclick="'javascript:setId(' + ${member.id} + ')'">
+                                삭제
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="deleteModalLabel">회원 삭제</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            해당 회원을 삭제하시겠습니까?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger"
+                                                    th:onclick="'javascript:deleteMember()'">삭제
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                해당 회원을 삭제하시겠습니까?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                <button type="button" class="btn btn-outline-danger" th:onclick="'javascript:deleteMember()'">삭제</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
-    <div th:replace="~{fragments/footer :: footer}"></div>
-</div> <!-- /container -->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- Contents -->
+            </div>
+        </main>
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
 
 <script>
     //전역변수로 설정하고 삭제 버튼 클릭시 여기에 setID 함수를 이용하여 저장. 토글창의 삭제 버튼에선 id 값이 정상적으로 출력이 안됨으로 이렇게 변수에 값을 저장하여 사용.
     let memberId = 0;
+
     function test() {
         alert(memberId);
     }

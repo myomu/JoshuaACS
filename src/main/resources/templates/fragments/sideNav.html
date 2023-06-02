@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div id="layoutSidenav_nav" th:fragment="sideNav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <div class="sb-sidenav-menu-heading">MAIN</div>
+                <a class="nav-link" href="/">
+                    <div class="sb-nav-link-icon"><i class="bi bi-house"></i></div>
+                    HOME
+                </a>
+
+                <div class="sb-sidenav-menu-heading">ATTENDANCE</div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAttendances"
+                   aria-expanded="false" aria-controls="collapseAttendances">
+                    <div class="sb-nav-link-icon"><i class="bi bi-journal"></i></div>
+                    출석
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down-fill"></i></div>
+                </a>
+                <div class="collapse" id="collapseAttendances" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="/attendances"><i class="bi bi-journal-check me-1"></i>출석 체크</a>
+                        <a class="nav-link" href="/attendances/status"><i class="bi bi-journals me-1"></i>출석 목록</a>
+                    </nav>
+                </div>
+
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMembers"
+                   aria-expanded="false" aria-controls="collapseMembers">
+                    <div class="sb-nav-link-icon"><i class="bi bi-person"></i></div>
+                    회원
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down-fill"></i></div>
+                </a>
+                <div class="collapse" id="collapseMembers" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="/members"><i class="bi bi-person-lines-fill me-1"></i>회원 목록</a>
+                        <a class="nav-link" href="/members/new"><i class="bi bi-person-plus me-1"></i>회원 추가</a>
+                    </nav>
+                </div>
+
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseGroups"
+                   aria-expanded="false" aria-controls="collapseGroups">
+                    <div class="sb-nav-link-icon"><i class="bi bi-people"></i></div>
+                    조
+                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down-fill"></i></div>
+                </a>
+                <div class="collapse" id="collapseGroups" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="/groups">조 목록</a>
+                        <a class="nav-link" href="/groups/new">조 추가</a>
+                    </nav>
+                </div>
+                <div class="sb-sidenav-menu-heading">Other Tasks</div>
+                <a class="nav-link" href="/minutes">
+                    <div class="sb-nav-link-icon"><i class="bi bi-folder"></i></div>
+                    회의록
+                </a>
+                <a class="nav-link" href="/#">
+                    <div class="sb-nav-link-icon"><i class="bi bi-columns"></i></div>
+                    게시판
+                </a>
+            </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Logged in as:</div>
+            Start Bootstrap
+        </div>
+    </nav>
+</div>
+
+</html>

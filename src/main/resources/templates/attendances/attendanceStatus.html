@@ -4,72 +4,89 @@
 
 <body>
 <nav th:replace="~{fragments/nav :: nav}"></nav>
-<div class="container">
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNav}"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <!-- Contents -->
+                <!--여기에 출석 리스트를 표시 -->
+                <section>
 
-    <!--여기에 출석 리스트를 표시 -->
-    <section>
-
-        <table class="table table-hover text-center">
-            <thead>
-            <tr>
-                <th>날짜</th>
-                <th>출석인원</th>
-                <th>총 인원</th>
-                <th>관리</th>
-            </tr>
-            </thead>
-            <th:block th:each="ats :${atsDTO}">
-<!--            <th:block th:each="date, count :${attendanceDateList}">-->
-                <tbody>
-                <tr>
-                    <td th:text="${#temporals.format(ats.datetime, 'yyyy-MM-dd HH:mm:ss')}">날짜</td>
-                    <td>
-                        <div class="row row-cols-auto">
-                            <th:block th:each="list :${attendanceList}" th:if="${list.attendance_date == ats.datetime}">
-                                <div class="col" th:text="${list.member.name}"></div>
-                            </th:block>
-                        </div>
-                    </td>
-                    <td th:text="${ats.count}">총 인원</td>
-                    <td>
-                        <a class="btn btn-primary" href="#" th:href="@{/attendances/{attendanceDate}/edit (attendanceDate=${ats.datetime})}" role="button">수정</a>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" th:attr="onclick='setDate(\'' + ${ats.datetime} + '\')'">
-                            삭제
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="deleteModalLabel">조 삭제</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                    <table class="table table-hover text-center">
+                        <thead>
+                        <tr>
+                            <th>날짜</th>
+                            <th>출석인원</th>
+                            <th>총 인원</th>
+                            <th>관리</th>
+                        </tr>
+                        </thead>
+                        <th:block th:each="ats :${atsDTO}">
+                            <!--            <th:block th:each="date, count :${attendanceDateList}">-->
+                            <tbody>
+                            <tr>
+                                <td th:text="${#temporals.format(ats.datetime, 'yyyy-MM-dd HH:mm:ss')}">날짜</td>
+                                <td>
+                                    <div class="row row-cols-auto">
+                                        <th:block th:each="list :${attendanceList}"
+                                                  th:if="${list.attendance_date == ats.datetime}">
+                                            <div class="col" th:text="${list.member.name}"></div>
+                                        </th:block>
                                     </div>
-                                    <div class="modal-body">
-                                        해당 조를 삭제하시겠습니까?
+                                </td>
+                                <td th:text="${ats.count}">총 인원</td>
+                                <td>
+                                    <a class="btn btn-primary" href="#"
+                                       th:href="@{/attendances/{attendanceDate}/edit (attendanceDate=${ats.datetime})}"
+                                       role="button">수정</a>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            th:attr="onclick='setDate(\'' + ${ats.datetime} + '\')'">
+                                        삭제
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="deleteModal" tabindex="-1"
+                                         aria-labelledby="deleteModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="deleteModalLabel">조 삭제</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    해당 조를 삭제하시겠습니까?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">닫기
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger"
+                                                            th:onclick="'javascript:deleteAttendance()'">삭제
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                        <button type="button" class="btn btn-outline-danger" th:onclick="'javascript:deleteAttendance()'">삭제</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </th:block>
-        </table>
-
-    </section>
-    <br/>
-    <div th:replace="~{fragments/footer :: footer}"></div>
-</div> <!-- /container -->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </th:block>
+                    </table>
+                </section>
+                <!-- Contents -->
+            </div>
+        </main>
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
 
 <script>
     let attendanceDate;
+
     function test() {
         alert(attendanceDate);
     }

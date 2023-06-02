@@ -4,62 +4,67 @@
 
 <body>
 <nav th:replace="~{fragments/nav :: nav}"></nav>
-<div class="container">
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNav}"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <!-- Contents -->
+                <!--여기에 출석 리스트를 표시 -->
+                <section>
 
-    <!--여기에 출석 리스트를 표시 -->
-    <section>
-
-        <table class="table table-hover text-center">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>조 이름</th>
-                <th>관리</th>
-            </tr>
-            </thead>
-            <th:block th:each="group :${groups}">
-                <tbody>
-                <tr>
-                    <td th:text="${group.id}">ID</td>
-                    <td th:text="${group.group_name}">조 이름</td>
-                    <td>
-                        <a class="btn btn-primary" href="#" th:href="@{/groups/{groupId}/edit (groupId=${group.id})}" role="button">수정</a>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" th:onclick="'javascript:setId(' + ${group.id} + ')'">
-                            삭제
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="deleteModalLabel">조 삭제</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                    <table class="table table-hover text-center">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>조 이름</th>
+                            <th>관리</th>
+                        </tr>
+                        </thead>
+                        <th:block th:each="group :${groups}">
+                            <tbody>
+                            <tr>
+                                <td th:text="${group.id}">ID</td>
+                                <td th:text="${group.group_name}">조 이름</td>
+                                <td>
+                                    <a class="btn btn-primary" href="#" th:href="@{/groups/{groupId}/edit (groupId=${group.id})}" role="button">수정</a>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" th:onclick="'javascript:setId(' + ${group.id} + ')'">
+                                        삭제
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="deleteModalLabel">조 삭제</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    해당 조를 삭제하시겠습니까?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                                    <button type="button" class="btn btn-outline-danger" th:onclick="'javascript:deleteGroup()'">삭제</button>
+                                                    <!--                                        'javascript:test(\'' + ${group.id} + '\')'-->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
-                                        해당 조를 삭제하시겠습니까?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                        <button type="button" class="btn btn-outline-danger" th:onclick="'javascript:deleteGroup()'">삭제</button>
-<!--                                        'javascript:test(\'' + ${group.id} + '\')'-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </th:block>
-        </table>
-    </section>
-
-
-    <br/>
-    <div th:replace="~{fragments/footer :: footer}"></div>
-</div> <!-- /container -->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </th:block>
+                    </table>
+                </section>
+                <!-- Contents -->
+            </div>
+        </main>
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
 
 <script>
     // document.querySelector("#delete-button").onclick = function () {

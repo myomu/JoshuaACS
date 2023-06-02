@@ -2,35 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: header}">
     <title>Hello</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<div class="container text-center">
-    <nav th:replace="~{fragments/nav :: nav}"></nav>
-    <div class="row align-items-center justify-content-center">
-        <div class="col mt-2">
-            <a class="btn btn-lg btn-primary p-4" href="/attendances">출석체크</a>
-            <a class="btn btn-lg btn-primary p-4" href="/attendances/status">출석현황</a>
-        </div>
+<nav th:replace="~{fragments/nav :: nav}"></nav>
 
-    <div class="row align-items-center justify-content-center">
-        <div class="col mt-2">
-            <a class="btn btn-lg btn-dark p-4" href="/members">회원명단</a>
-        </div>
+<div id="layoutSidenav">
+    <div th:replace="~{fragments/sideNav :: sideNav}"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <!-- Contents -->
+                <div class="row align-items-center justify-content-center">
+                    <div class="col mt-2">
+                        <a class="btn btn-lg btn-primary p-4" href="/attendances">출석체크</a>
+                        <a class="btn btn-lg btn-primary p-4" href="/attendances/status">출석현황</a>
+                    </div>
+
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col mt-2">
+                            <a class="btn btn-lg btn-dark p-4" href="/members">회원명단</a>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col mt-2">
+                            <a class="btn btn-lg btn-info p-4" href="/minutes">회의록</a>
+                            <a class="btn btn-lg btn-info p-4" href="/boards">게시판</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contents -->
+            </div>
+        </main>
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
     </div>
+</div>
 
-    <div class="row align-items-center justify-content-center">
-        <div class="col mt-2">
-            <a class="btn btn-lg btn-info p-4" href="/minutes">회의록</a>
-            <a class="btn btn-lg btn-info p-4" href="/boards">게시판</a>
-        </div>
-    </div>
-
-
-
-    </div>
-    <br/>
-    <div th:replace="~{fragments/footer :: footer}"></div>
-</div> <!-- /container -->
 </body>
 </html>

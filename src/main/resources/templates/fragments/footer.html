@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div class="footer" th:fragment="footer">
-    <p>&copy; JOSHUA ACS V1</p>
+<footer class="py-4 bg-light mt-auto" th:fragment="footer">
+<!--    <p style="text-align: center">&copy; JOSHUA ACS V1</p>-->
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; Joshua ACS V1 2023</div>
+            <div>
+                <a href="#">Privacy Policy</a>
+                &middot;
+                <a href="#">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </div>
 
     <!-- jQuery JS -->
     <script src="https://code.jquery.com/jquery-3.6.4.js"
@@ -32,5 +42,6 @@
         }
     </script>
 
-</div>
+
+</footer>
 </html>

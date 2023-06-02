@@ -1,109 +1,97 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: header}"></head>
-<style>
-
-    .field-error {
-        border-color: #dc3545;
-        color: #dc3545;
-    }
-
-    body {
-        background-color: #f0f2f5;
-    }
-
-    .container {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .card {
-        width: 350px;
-        border: none;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-title {
-        color: #1877f2;
-        font-weight: bold;
-        font-size: 24px;
-    }
-
-    .form-control {
-        border: 1px solid #dddfe2;
-        border-radius: 5px;
-        padding: 10px;
-        font-size: 14px;
-        background-color: #f6f7f9;
-    }
-
-    .btn-primary {
-        background-color: #1877f2;
-        border: none;
-        font-size: 16px;
-        font-weight: bold;
-        padding: 10px;
-        width: 100%;
-    }
-
-    .btn-primary:hover {
-        background-color: #166fe5;
-    }
-
-    .btn-primary:focus {
-        box-shadow: none;
-    }
-
-    .text-center {
-        color: #606770;
-        font-size: 14px;
-        margin-top: 10px;
-    }
-
-    .text-center a {
-        color: #1877f2;
-        text-decoration: none;
-    }
-
-</style>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <title>여호수아 출석 체크 시스템</title>
+    <!-- Login CSS -->
+    <link rel="stylesheet" href="/css/login.css">
+</head>
 <body>
-<div class="container">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title text-center">로그인</h5>
-            <form th:object="${loginForm}" method="post">
-                <div th:if="${#fields.hasGlobalErrors()}">
-                    <p class="field-error" th:each="err : ${#fields.globalErrors()}"
-                       th:text="${err}">전체 오류 메시지</p>
-                </div>
-                <div>
-                    <label for="loginId">아이디</label>
-                    <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
-                           th:errorclass="field-error" placeholder="아이디">
-                    <div class="field-error" th:errors="*{loginId}"/>
-                </div>
-                <div>
-                    <label for="password">비밀번호</label>
-                    <input type="password" id="password" th:field="*{password}" class="form-control"
-                           th:errorclass="field-error" placeholder="비밀번호">
-                    <div class="field-error" th:errors="*{password}"/>
-                </div>
-                <hr class="my-4">
-                <div class="row">
-                    <div class="col">
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">
-                            로그인
-                        </button>
+<div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-4 p-sm-5">
+                        <h5 class="card-title text-center mb-5 fw-light fs-5">로그인</h5>
+                        <form name="loginForm" th:object="${loginForm}" method="post" onsubmit="return checkIdAndPwd()">
+                            <div class="form-floating mb-3">
+                                <input type="text" id="loginId" name="loginId" th:field="*{loginId}"
+                                       class="form-control"
+                                       th:errorclass="field-error" placeholder="아이디">
+                                <label for="loginId">아이디</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" id="password" name="password" th:field="*{password}"
+                                       class="form-control"
+                                       th:errorclass="field-error" placeholder="비밀번호">
+                                <label for="password">비밀번호</label>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">
+                                    로그인
+                                </button>
+                            </div>
+
+                            <div th:if="${#fields.hasGlobalErrors()}">
+                                <p class="error-message mt-3" th:each="err : ${#fields.globalErrors()}"
+                                   th:text="${err}">전체 오류 메시지</p>
+                            </div>
+                            <div class="error-message mt-3"></div>
+
+                            <hr class="my-4">
+<!--                            <div class="d-grid mb-2">-->
+<!--                                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">-->
+<!--                                    <i class="bi bi-google"></i> Sign in with Google-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <div class="d-grid">-->
+<!--                                <button class="btn btn-facebook btn-login text-uppercase fw-bold" type="submit">-->
+<!--                                    <i class="bi bi-facebook"></i> Sign in with Facebook-->
+<!--                                </button>-->
+<!--                            </div>-->
+                        </form>
                     </div>
                 </div>
-            </form>
-            <br/>
-            <div th:replace="~{fragments/footer :: footer}"></div>
+            </div>
         </div>
-    </div> <!--card-->
-</div> <!-- /container -->
+    </div> <!--container-->
+    <footer class="py-4 bg-light fixed-bottom" th:fragment="footer">
+        <!--    <p style="text-align: center">&copy; JOSHUA ACS V1</p>-->
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">Copyright &copy; Joshua ACS V1 2023</div>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    &middot;
+                    <a href="#">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery JS -->
+        <script src="https://code.jquery.com/jquery-3.6.4.js"
+                integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous">
+        </script>
+        <!-- Popper JS -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+                integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+                crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+                crossorigin="anonymous"></script>
+        <!-- Custom JS -->
+        <script src="/js/custom.js"></script>
+
+    </footer>
+</div> <!--wrapper-->
+
+<script src="/js/login.js"></script>
 </body>
 </html>
