@@ -48,7 +48,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks.register('copyPrivate', Copy) {
+task copyPrivate(type: Copy) {
 	copy {
 		from('./submodule-joshuaacs')
 		include("*.yml")
