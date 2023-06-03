@@ -54,7 +54,7 @@ public class MemberController {
 
         memberService.join(member);
 
-        return "redirect:/attendances";
+        return "redirect:/members";
     }
 
     @GetMapping("/members/{memberId}/edit")

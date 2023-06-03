@@ -22,7 +22,7 @@ public class MinutesFileRepository {
     }
 
     public List<MinutesFile> findAll() {
-        return em.createQuery("select mf from MinutesFile mf", MinutesFile.class)
+        return em.createQuery("select mf from MinutesFile mf order by mf.date desc", MinutesFile.class)
                 .getResultList();
     }
 

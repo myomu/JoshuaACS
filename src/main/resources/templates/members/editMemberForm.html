@@ -14,44 +14,53 @@
         <main>
             <div class="container-fluid px-4">
                 <!-- Contents -->
-                <form role="form" th:object="${memberForm}" method="post">
-                    <div class="form-floating mt-3">
-                        <input type="text" th:field="*{name}" class="form-control"
-                               placeholder="이름"
-                               th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'"
-                               required>
-                        <label th:for="name">이름</label>
-                        <p th:if="${#fields.hasErrors('name')}"
-                           th:errors="*{name}">Incorrect date</p>
+
+                <section class="container-fluid mt-5 p-3" style="border-radius: 10px; max-width: 600px; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+                    <div class="text-center mt-3 mb-5">
+                        <div class="fs-4">회원 수정</div>
                     </div>
-                    <div class="form-floating mt-3">
-                        <input type="number" th:field="*{age}" class="form-control" min="0" max="200"
-                               placeholder="나이" required>
-                        <label th:for="age">나이</label>
-                    </div>
-                    <div class="form-group mt-3">
-                        <div>성별</div>
-                        <div th:each="type : ${genderTypes}" class="form-check form-check-inline">
-                            <input type="radio" th:field="*{gender}" th:value="${type.name()}" class="form-check-input"
-                                   th:checked="*{gender}" required>
-                            <label th:for="${#ids.prev('gender')}" th:text="${type.description}"
-                                   class="form-check-label">
-                                성별
-                            </label>
+
+                    <form role="form" th:object="${memberForm}" method="post">
+                        <div class="form-floating mt-3">
+                            <input type="text" th:field="*{name}" class="form-control"
+                                   placeholder="이름"
+                                   th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'"
+                                   required>
+                            <label th:for="name">이름</label>
+                            <p th:if="${#fields.hasErrors('name')}"
+                               th:errors="*{name}">Incorrect date</p>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label th:for="group">조이름</label>
-                        <select name="groupId" id="group" class="form-control" required>
-                            <option value="">조 선택</option>
-                            <option th:each="group : ${groups}"
-                                    th:value="${group.id}"
-                                    th:text="${group.group_name}"
-                                    th:selected="${group.id} == *{group.id}"/>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">저장</button>
-                </form>
+                        <div class="form-floating mt-3">
+                            <input type="number" th:field="*{age}" class="form-control" min="0" max="200"
+                                   placeholder="나이" required>
+                            <label th:for="age">나이</label>
+                        </div>
+                        <div class="form-group mt-3">
+                            <div>성별</div>
+                            <div th:each="type : ${genderTypes}" class="form-check form-check-inline">
+                                <input type="radio" th:field="*{gender}" th:value="${type.name()}" class="form-check-input"
+                                       th:checked="*{gender}" required>
+                                <label th:for="${#ids.prev('gender')}" th:text="${type.description}"
+                                       class="form-check-label">
+                                    성별
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="group">조이름</label>
+                            <select name="groupId" id="group" class="form-control" required>
+                                <option value="">조 선택</option>
+                                <option th:each="group : ${groups}"
+                                        th:value="${group.id}"
+                                        th:text="${group.group_name}"
+                                        th:selected="${group.id} == *{group.id}"/>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">저장</button>
+                    </form>
+                </section>
+
+
                 <!-- Contents -->
             </div>
         </main>

@@ -10,57 +10,103 @@
         <main>
             <div class="container-fluid px-4">
                 <!-- Contents -->
-                <table class="table table-hover text-center">
-                    <thead>
-                    <tr>
-                        <th>이름</th>
-                        <th>나이</th>
-                        <th>성별</th>
-                        <th>조이름</th>
-                        <th>관리</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="member :${members}">
-                        <td th:text="${member.name}">이름</td>
-                        <td th:text="${member.age}">나이</td>
-                        <td th:text="${member.gender.description}">성별</td>
-                        <td th:text="${member.group.group_name}">조이름</td>
-                        <td>
-                            <a class="btn btn-primary" href="#"
-                               th:href="@{/members/{memberId}/edit (memberId=${member.id})}" role="button">수정</a>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal" th:onclick="'javascript:setId(' + ${member.id} + ')'">
-                                삭제
-                            </button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                                 aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="deleteModalLabel">회원 삭제</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            해당 회원을 삭제하시겠습니까?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기
-                                            </button>
-                                            <button type="button" class="btn btn-outline-danger"
-                                                    th:onclick="'javascript:deleteMember()'">삭제
-                                            </button>
+
+                <h1 class="mt-4">회원 목록</h1>
+
+                <div class="d-flex flex-row">
+                    <div class="card mb-4">
+                        <div class="card-body p-2">
+                            회원 목록 테이블 입니다.
+                        </div>
+                    </div>
+                    <a href="/members/new" class="btn btn-primary ms-3 p-2" style="height: fit-content"><i class="bi bi-person-plus me-1"></i>회원 추가</a>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        회원 목록 테이블
+                    </div>
+
+                    <div class="card-body text-center">
+                        <table id="dataTables">
+                            <thead>
+                            <tr>
+                                <th>이름</th>
+                                <th>나이</th>
+                                <th>성별</th>
+                                <th>조이름</th>
+                                <th data-sortable="false">관리</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>이름</th>
+                                <th>나이</th>
+                                <th>성별</th>
+                                <th>조이름</th>
+                                <th>관리</th>
+                            </tr>
+                            </tfoot>
+                            <!--여기에 회원 리스트를 표시 -->
+                            <tbody>
+                            <tr th:each="member :${members}">
+                                <td th:text="${member.name}">이름</td>
+                                <td th:text="${member.age}">나이</td>
+                                <td th:text="${member.gender.description}">성별</td>
+                                <td th:text="${member.group.group_name}">조이름</td>
+                                <td>
+
+                                    <!--수정, 삭제 드롭다운 버튼-->
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle text-black" data-bs-toggle="dropdown"
+                                           aria-expanded="false"><i class="bi bi-three-dots"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item"
+                                                   th:href="@{/members/{memberId}/edit (memberId=${member.id})}">
+                                                수정</a>
+                                            </li>
+                                            <li><a class="dropdown-item" data-bs-toggle="modal"
+                                                   href="/#"
+                                                   data-bs-target="#deleteModal"
+                                                   th:onclick="'javascript:setId(' + ${member.id} + ')'">
+                                                삭제</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="deleteModal" tabindex="-1"
+                                         aria-labelledby="deleteModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="deleteModalLabel">회원 삭제</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    해당 회원을 삭제하시겠습니까?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">닫기
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger"
+                                                            th:onclick="'javascript:deleteMember()'">삭제
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <!-- Contents -->
             </div>
         </main>

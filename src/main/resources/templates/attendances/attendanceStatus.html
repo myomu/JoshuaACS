@@ -10,22 +10,43 @@
         <main>
             <div class="container-fluid px-4">
                 <!-- Contents -->
-                <!--여기에 출석 리스트를 표시 -->
-                <section>
 
-                    <table class="table table-hover text-center">
-                        <thead>
-                        <tr>
-                            <th>날짜</th>
-                            <th>출석인원</th>
-                            <th>총 인원</th>
-                            <th>관리</th>
-                        </tr>
-                        </thead>
-                        <th:block th:each="ats :${atsDTO}">
-                            <!--            <th:block th:each="date, count :${attendanceDateList}">-->
-                            <tbody>
+                <h1 class="mt-4">출석 체크 목록</h1>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        출석체크 목록 테이블 입니다.
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        출석 체크 테이블
+                    </div>
+
+                    <div class="card-body text-center">
+                        <table id="dataTables">
+                            <thead>
                             <tr>
+                                <th>날짜</th>
+                                <th>출석인원</th>
+                                <th style="min-width: 60px">총인원</th>
+                                <th style="min-width: 45px" data-sortable="false">관리</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>날짜</th>
+                                <th>출석인원</th>
+                                <th>총인원</th>
+                                <th data-sortable="false">관리</th>
+                            </tr>
+                            </tfoot>
+                            <!--여기에 출석 리스트를 표시 -->
+                            <!--<th:block th:each="ats :${atsDTO}">-->
+                            <tbody>
+                            <tr th:each="ats :${atsDTO}">
                                 <td th:text="${#temporals.format(ats.datetime, 'yyyy-MM-dd HH:mm:ss')}">날짜</td>
                                 <td>
                                     <div class="row row-cols-auto">
@@ -35,17 +56,26 @@
                                         </th:block>
                                     </div>
                                 </td>
-                                <td th:text="${ats.count}">총 인원</td>
+                                <td th:text="${ats.count}">총인원</td>
                                 <td>
-                                    <a class="btn btn-primary" href="#"
-                                       th:href="@{/attendances/{attendanceDate}/edit (attendanceDate=${ats.datetime})}"
-                                       role="button">수정</a>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal"
-                                            th:attr="onclick='setDate(\'' + ${ats.datetime} + '\')'">
-                                        삭제
-                                    </button>
+                                    <!--수정, 삭제 드롭다운 버튼-->
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle text-black" data-bs-toggle="dropdown"
+                                           aria-expanded="false"><i class="bi bi-three-dots"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" id="editDropdown"
+                                                   th:href="@{/attendances/{attendanceDate}/edit (attendanceDate=${ats.datetime})}">
+                                                수정</a>
+                                            </li>
+                                            <li><a class="dropdown-item" data-bs-toggle="modal" id="deleteDropdown"
+                                                   href="/#"
+                                                   data-bs-target="#deleteModal"
+                                                   th:attr="onclick='setDate(\'' + ${ats.datetime} + '\')'">
+                                                삭제</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                     <!-- Modal -->
                                     <div class="modal fade" id="deleteModal" tabindex="-1"
                                          aria-labelledby="deleteModalLabel"
@@ -53,12 +83,12 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="deleteModalLabel">조 삭제</h1>
+                                                    <h1 class="modal-title fs-5" id="deleteModalLabel">출석 삭제</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    해당 조를 삭제하시겠습니까?
+                                                    해당 출석을 삭제하시겠습니까?
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -74,13 +104,20 @@
                                 </td>
                             </tr>
                             </tbody>
-                        </th:block>
-                    </table>
-                </section>
+                            <!--</th:block>-->
+                        </table>
+                    </div>
+                </div>
+
                 <!-- Contents -->
             </div>
         </main>
         <footer th:replace="~{fragments/footer :: footer}"></footer>
+        <script>
+            document.querySelector('div.datatable-top .datatable-dropdown label').innerText = "~~~";
+            document.querySelector('td.datatable-empty').innerText = "~~~";
+
+        </script>
     </div>
 </div>
 

@@ -14,18 +14,27 @@
         <main>
             <div class="container-fluid px-4">
                 <!-- Contents -->
-                <form role="form" th:action="@{/groups/new}" th:object="${groupForm}"
-                      method="post">
-                    <div class="form-group mt-3">
-                        <label th:for="name" class="form-label">조이름</label>
-                        <input type="text" th:field="*{name}" class="form-control"
-                               placeholder="조이름을 입력하세요"
-                               th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'" required>
-                        <p th:if="${#fields.hasErrors('name')}"
-                           th:errors="*{name}">Incorrect date</p>
+
+                <section class="container-fluid mt-5 p-3" style="border-radius: 10px; max-width: 600px; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+                    <div class="text-center mt-3 mb-5">
+                        <div class="fs-4">조 추가</div>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">저장</button>
-                </form>
+
+                    <form role="form" th:action="@{/groups/new}" th:object="${groupForm}"
+                          method="post">
+                        <div class="form-floating mt-3">
+                            <input type="text" th:field="*{name}" class="form-control"
+                                   placeholder="조이름을 입력하세요"
+                                   th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'" required>
+                            <label th:for="name" class="form-label">조이름</label>
+                            <p th:if="${#fields.hasErrors('name')}"
+                               th:errors="*{name}">Incorrect date</p>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">저장</button>
+                    </form>
+
+                </section>
+
                 <!-- Contents -->
             </div>
         </main>

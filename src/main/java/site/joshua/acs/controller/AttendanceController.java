@@ -1,6 +1,7 @@
 package site.joshua.acs.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class AttendanceController {
@@ -40,7 +42,12 @@ public class AttendanceController {
     }
 
     @PostMapping("/attendances/new")
-    public String create(@RequestParam("id") List<Long> memberIds) {
+    public String create(@RequestParam(name = "id", required = false) List<Long> memberIds) {
+
+        if (memberIds == null) {
+            log.info("AttendanceNullCheck={}", memberIds);
+            return "redirect:/attendances";
+        }
 
         LocalDateTime localDateTime = LocalDateTime.now();
 
@@ -55,7 +62,7 @@ public class AttendanceController {
             attendance.createAttendance(member, AttendanceStatus.ATTENDANCE, localDateTime);
             attendanceService.addAttendance(attendance);
         }
-        return "redirect:/attendances";
+        return "redirect:/attendances/status";
     }
 
     @GetMapping("/attendances/status")

@@ -23,7 +23,7 @@ public class AttendanceRepository {
     }
 
     public List<Attendance> findAll() {
-        return em.createQuery("select a from Attendance a", Attendance.class)
+        return em.createQuery("select a from Attendance a order by a.member.name", Attendance.class)
                 .getResultList();
     }
 
