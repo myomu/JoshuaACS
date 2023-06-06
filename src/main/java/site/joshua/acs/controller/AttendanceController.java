@@ -17,6 +17,7 @@ import site.joshua.acs.service.GroupService;
 import site.joshua.acs.service.MemberService;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,14 +43,28 @@ public class AttendanceController {
     }
 
     @PostMapping("/attendances/new")
-    public String create(@RequestParam(name = "id", required = false) List<Long> memberIds) {
+    public String create(@RequestParam(name = "id", required = false) List<Long> memberIds,
+                         @RequestParam(name = "year", required = false) String year,
+                         @RequestParam(name = "month", required = false) String month,
+                         @RequestParam(name = "day", required = false) String day) {
 
         if (memberIds == null) {
             log.info("AttendanceNullCheck={}", memberIds);
             return "redirect:/attendances";
         }
 
-        LocalDateTime localDateTime = LocalDateTime.now();
+        log.info("testDate={}", year+"-"+month+"-"+day);
+
+        LocalDateTime dateTime;
+
+        if (year == null || month == null || day == null) {
+            dateTime = LocalDateTime.now();
+        } else {
+            String date = year+"-"+month+"-"+day+" 00:00:00";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            dateTime = LocalDateTime.parse(date, formatter);
+        }
+
 
         System.out.println("memberIds = " + memberIds);
 
@@ -59,7 +74,7 @@ public class AttendanceController {
             Member member = new Member();
             member.setMemberId(memberId);
 
-            attendance.createAttendance(member, AttendanceStatus.ATTENDANCE, localDateTime);
+            attendance.createAttendance(member, AttendanceStatus.ATTENDANCE, dateTime);
             attendanceService.addAttendance(attendance);
         }
         return "redirect:/attendances/status";

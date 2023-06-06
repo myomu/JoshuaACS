@@ -10,16 +10,28 @@
         <main>
             <div class="container-fluid px-4">
                 <!-- Contents -->
-                <!--회의록 추가 버튼(Modal)-->
-                <button type="button" class="btn btn-primary mt-3 mb-5" data-bs-toggle="modal"
-                        data-bs-target="#addMinutesModal">회의록 추가
-                </button>
+
+                <h1 class="mt-4">회의록</h1>
+
+                <div class="d-flex flex-row">
+                    <div class="card mb-4">
+                        <div class="card-body p-2">
+                            회의록 화면입니다.
+                        </div>
+                    </div>
+                    <!-- 회의록 추가 버튼 -->
+                    <button type="button" class="btn btn-primary ms-3 p-2" style="height: fit-content" data-bs-toggle="modal"
+                            data-bs-target="#addMinutesModal"><i class="bi bi-file-earmark-plus me-1"></i>회의록 추가
+                    </button>
+                </div>
+
+                <!-- 회의록 추가 버튼(Modal) -->
                 <div class="modal fade" id="addMinutesModal" tabindex="-1" aria-labelledby="addMinutesModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="addMinutesModalLabel">회의록 파일 저장</h1>
+                                <h1 class="modal-title fs-5" id="addMinutesModalLabel">회의록 이미지 파일 저장</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
@@ -54,10 +66,6 @@
                                         <input class="form-control" type="file" id="file-name" name="minutesFiles"
                                                multiple="multiple" required>
                                     </div>
-                                    <!--                        <div class="mb-3">-->
-                                    <!--                            <label for="message-text" class="col-form-label">내용:</label>-->
-                                    <!--                            <textarea class="form-control" id="message-text" name="contents"></textarea>-->
-                                    <!--                        </div>-->
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -69,21 +77,33 @@
                         </div>
                     </div>
                 </div>
+                <!-- 회의록 추가 버튼(Modal) END -->
 
-                <!--Card List-->
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                <!-- Card List -->
+                <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4">
                     <div class="col" th:each="minutesFile : ${minutesFiles}">
                         <!-- Card -->
-                        <div class="card h-100">
-                            <div class="card-header">
+                        <div class="card">
 
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-danger float-end" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"
-                                        th:onclick="'javascript:setId(' + ${minutesFile.id} + ')'">
-                                    삭제
-                                </button>
-                                <!-- Modal -->
+                            <div class="card-header">
+                            </div>
+
+                            <img th:src="${minutesFile.storeFileName}" class="overflow-auto" alt="..."
+                                 th:attr="data-bs-target='#modal-'+${minutesFile.id}" data-bs-toggle="modal">
+
+                            <div class="card-body d-flex">
+                                <p class="card-text mt-auto" th:text="${minutesFile.uploadFileName}" style="font-size: 0.8em">FileName</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted" th:text="${minutesFile.date}">Contents Date</small>
+
+                                <!-- Delete Button modal -->
+                                <a type="button" class="float-end text-dark" data-bs-toggle="modal"
+                                   data-bs-target="#deleteModal" title="삭제" data-bs-placement="top" id="deleteMinutes"
+                                   th:onclick="'javascript:setId(' + ${minutesFile.id} + ')'">
+                                    <i class="bi bi-trash2"></i>
+                                </a>
+                                <!-- Delete Modal -->
                                 <div class="modal fade" id="deleteModal" tabindex="-1"
                                      aria-labelledby="deleteModalLabel"
                                      aria-hidden="true">
@@ -108,21 +128,13 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                <!-- Delete Modal END -->
 
-                            <img th:src="${minutesFile.storeFileName}" class="card-img-top" alt="..."
-                                 th:attr="data-bs-target='#modal-'+${minutesFile.id}" data-bs-toggle="modal">
-
-                            <div class="card-body">
-                                <p class="card-title" th:text="${minutesFile.uploadFileName}">FileName</p>
-                                <p class="card-text" ></p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted" th:text="${minutesFile.date}">Contents Date</small>
                             </div>
                         </div>
+                        <!-- Card END -->
 
-                        <!-- Modal -->
+                        <!-- Card Image Modal -->
                         <div class="modal fade" th:id="'modal-'+${minutesFile.id}" tabindex="-1"
                              aria-labelledby="exampleModalLabel"
                              aria-hidden="true">
@@ -132,22 +144,23 @@
                                         <h1 class="modal-title fs-5" id="exampleModalLabel"
                                             th:text="${minutesFile.uploadFileName}">
                                             FileName</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <img th:src="${minutesFile.storeFileName}" class="card-img-top" alt="...">
                                     </div>
                                     <div class="modal-footer">
-                                        <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
                                         <a type="button" class="btn btn-primary"
                                            th:href="|/minutes/${minutesFile.id}/download|">다운로드</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Card Image Modal END -->
                     </div>
                 </div>
+                <!-- Card List END -->
+
                 <!-- Contents -->
             </div>
         </main>
@@ -163,8 +176,8 @@
     // 연도 select option 생성
     let yearSelect = document.querySelector('#year');
     let currentYear = new Date().getFullYear();
-    let startYear = currentYear - 10; // 시작 연도
-    let endYear = currentYear + 10; // 끝 연도
+    let startYear = currentYear - 3; // 시작 연도
+    let endYear = currentYear + 3; // 끝 연도
 
     for (let year = startYear; year <= endYear; year++) {
         let option = document.createElement('option');
@@ -179,7 +192,11 @@
     for (let month = 1; month <= 12; month++) {
         let option = document.createElement('option');
         option.text = month.toString() + '월';
-        option.value = month.toString();
+        if (month < 10) {
+            option.value = "0"+month.toString();
+        } else {
+            option.value = month.toString();
+        }
         monthSelect.appendChild(option);
     }
 
@@ -189,7 +206,11 @@
     for (let day = 1; day <= 31; day++) {
         let option = document.createElement('option');
         option.text = day.toString() + '일';
-        option.value = day.toString();
+        if (day < 10) {
+            option.value = "0"+day.toString();
+        } else {
+            option.value = day.toString();
+        }
         daySelect.appendChild(option);
     }
 
@@ -212,6 +233,11 @@
         form.submit();
     }
 
+    // Initialize tooltips
+    let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="modal"]'))
+    let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
 </script>
 
 </body>

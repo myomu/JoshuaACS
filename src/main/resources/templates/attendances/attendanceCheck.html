@@ -10,19 +10,67 @@
         <main>
             <div class="container-fluid px-4">
                 <!-- Contents -->
+
+                <h1 class="mt-4">출석 체크</h1>
+
+                <div class="card mt-3 mb-4">
+                    <div class="card-body">
+                        출석체크 화면입니다.
+                    </div>
+                </div>
+
                 <!--여기에 출석 리스트를 표시 -->
-                <p>출석인원</p>
-                <form role="form" action="attendances/new" th:object="${memberList}" method="post">
+                <form class="mb-5" role="form" action="attendances/new" th:object="${memberList}" method="post">
+                    <!--날짜 입력창-->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p>수동 날짜 입력</p>
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" id="disableSwitch">
+                                <label class="form-check-label" for="disableSwitch">날짜 입력<small> - 수동 입력을 하지 않을 시 현재 날짜를 기준으로 저장합니다.</small></label>
+                            </div>
+                            <!--날짜 Selector-->
+                            <div id="select-date" class="mt-2">
+                                <div class="row col-auto col-lg-6">
+                                    <div class="col">
+                                        <select class="form-select" id="year" name="year" disabled>
+                                            <option selected value="0">년도</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" id="month" name="month" disabled>
+                                            <option selected value="0">월</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" id="day" name="day" disabled>
+                                            <option selected value="0">일</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--날짜 Selector-->
+                        </div>
+                    </div>
+                    <!--날짜 입력창-->
+
                     <th:block th:each="group: ${groups}">
-                        <p class="mt-3" th:text="${group.group_name}">조이름</p>
-                        <div class="row">
-                            <div class="col">
-                                <div th:each="member: ${members}" th:if="${member.group.group_name == group.group_name}"
-                                     class="form-check form-check-inline">
-                                    <input type="checkbox" th:field="*{id}" th:value="${member.id}"
-                                           class="form-check-input">
-                                    <label th:for="${#ids.prev('id')}" class="form-check-label"
-                                           th:text="${member.name}">이름</label>
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5 class="mt-2" th:text="${group.group_name}">조이름</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div th:each="member: ${members}"
+                                             th:if="${member.group.group_name == group.group_name}"
+                                             class="form-check form-check-inline">
+                                            <input type="checkbox" th:field="*{id}" th:value="${member.id}"
+                                                   class="form-check-input">
+                                            <label th:for="${#ids.prev('id')}" class="form-check-label"
+                                                   th:text="${member.name}">이름</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -37,9 +85,62 @@
 </div>
 
 <script>
-    // function alertOK() {
-    //     alert("출석체크가 저장되었습니다.") // 이 부분 수정 필요. checkbox required 통과 후 함수가 실행되어야 함.
-    // }
+    const disableSwitch = document.querySelector('#disableSwitch');
+    disableSwitch.onclick = function() {
+        if (this.checked) {
+            //체크 시 disabled 비활성화
+            document.querySelector('#year').disabled = false;
+            document.querySelector('#month').disabled = false;
+            document.querySelector('#day').disabled = false;
+        } else {
+            //체크 해제 시 disabled 활성화
+            document.querySelector('#year').disabled = true;
+            document.querySelector('#month').disabled = true;
+            document.querySelector('#day').disabled = true;
+        }
+    };
+
+    // 연도 select option 생성
+    let yearSelect = document.querySelector('#year');
+    let currentYear = new Date().getFullYear();
+    let startYear = currentYear - 3; // 시작 연도
+    let endYear = currentYear + 3; // 끝 연도
+
+    for (let year = startYear; year <= endYear; year++) {
+        let option = document.createElement('option');
+        option.text = year.toString() + '년';
+        option.value = year.toString();
+        yearSelect.appendChild(option);
+    }
+
+    // 월 select option 생성
+    let monthSelect = document.querySelector('#month');
+
+    for (let month = 1; month <= 12; month++) {
+        let option = document.createElement('option');
+        option.text = month.toString() + '월';
+        if (month < 10) {
+            option.value = "0"+month.toString();
+        } else {
+            option.value = month.toString();
+        }
+        monthSelect.appendChild(option);
+    }
+
+    // 일 select option 생성
+    let daySelect = document.querySelector('#day');
+
+    for (let day = 1; day <= 31; day++) {
+        let option = document.createElement('option');
+        option.text = day.toString() + '일';
+        if (day < 10) {
+            option.value = "0"+day.toString();
+        } else {
+            option.value = day.toString();
+        }
+        daySelect.appendChild(option);
+    }
+
 </script>
 </body>
 </html>

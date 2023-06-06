@@ -19,6 +19,6 @@ else
   sleep 5
 fi
 
-DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
+DEPLOY_JAR=$DEPLOY_PATH/bulid/libs/$JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ubuntu/action/deploy.log
 nohup java -jar $DEPLOY_JAR >> /home/ubuntu/deploy.log 2>/home/ubuntu/action/deploy_err.log &
