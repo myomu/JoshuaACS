@@ -6,13 +6,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import site.joshua.acs.domain.Attendance;
 import site.joshua.acs.domain.Gender;
 import site.joshua.acs.domain.Group;
 import site.joshua.acs.domain.Member;
+import site.joshua.acs.dto.MemberListDTO;
 import site.joshua.acs.form.MemberForm;
+import site.joshua.acs.service.AttendanceService;
 import site.joshua.acs.service.GroupService;
 import site.joshua.acs.service.MemberService;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,11 +26,28 @@ public class MemberController {
 
     private final MemberService memberService;
     private final GroupService groupService;
+    private final AttendanceService attendanceService;
 
     @GetMapping("/members")
     public String MemberList(Model model) {
         List<Member> members = memberService.findMembers();
-        model.addAttribute("members", members);
+        List<Attendance> attendances = attendanceService.findAttendances();
+        List<LocalDateTime> attendanceDateTime = attendanceService.findNoDuplicateDate();
+        List<MemberListDTO> memberListDTOS = new ArrayList<>();
+
+        for (Member member : members) {
+            int count = 0;
+            for (Attendance attendance : attendances) {
+                if (member == attendance.getMember()) {
+                    count++;
+                }
+            }
+            // 출석률을 계산하여 member 객체와 함께 MemberListDTO 에 저장시킨다.
+            // 출석 날짜를 기준으로 나누기 때문에 findNoDuplicateDate()로 중복없는 날짜를 가져와 나눠준다.
+            Double rate = Math.round((double) count / attendanceDateTime.size() * 100.0) / 100.0;
+            memberListDTOS.add(new MemberListDTO(member, rate));
+        }
+        model.addAttribute("memberListDTO", memberListDTOS);
         return "members/memberList";
     }
 
@@ -95,4 +117,6 @@ public class MemberController {
     public Gender[] genderTypes() {
         return Gender.values();
     }
+
 }
+
