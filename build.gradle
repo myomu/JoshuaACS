@@ -56,3 +56,8 @@ task copyPrivate(type: Copy) {
 	}
 }
 
+jar {
+	enabled = false
+}
+
+
