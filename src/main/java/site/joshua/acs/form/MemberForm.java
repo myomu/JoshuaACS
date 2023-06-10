@@ -15,4 +15,5 @@ public class MemberForm {
     private int age;
     private Gender gender;
     private Group group;
+
 }

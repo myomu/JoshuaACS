@@ -34,6 +34,9 @@ public class MinutesFileService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    /**
+     * 파일 업로드
+     */
     @Transactional
     public void saveUploadFile(List<MultipartFile> multipartFiles, String date) throws IOException {
         for (MultipartFile multipartFile : multipartFiles) {
@@ -47,7 +50,7 @@ public class MinutesFileService {
             String ext = originalFileName.substring(index + 1);
 
             String storeFileName = UUID.randomUUID() + "." + ext;
-            String keyName = "test/" + date + "/" + storeFileName;
+            String keyName = "meeting_minutes/" + date + "/" + storeFileName;
 
             // AWS S3 에 넣는 작업. putObject 를 사용한다.
             try (InputStream inputStream = multipartFile.getInputStream()) {
@@ -63,10 +66,16 @@ public class MinutesFileService {
         }
     }
 
+    /**
+     * 파일들을 찾는다.
+     */
     public List<MinutesFile> findMinutesFiles() {
         return minutesFileRepository.findAll();
     }
 
+    /**
+     * DB와 AWS S3 에서 해당 파일을 삭제한다.
+     */
     @Transactional
     public String deleteMinutesFile(Long minutesFileId) {
 

@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 
 @Getter @Setter
 public class AttendanceStatusDTO {
+
     private LocalDateTime datetime;
     private int count;
+
 }

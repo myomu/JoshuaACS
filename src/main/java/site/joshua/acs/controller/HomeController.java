@@ -11,16 +11,20 @@ import site.joshua.acs.domain.User;
 @Slf4j
 public class HomeController {
 
+    /**
+     * 메인 홈 화면 로그인 유무에 따른 처리
+     */
     @RequestMapping("/")
     public String homeLogin(@Login User loginUser, Model model) {
 
-        //세션에 사용자가 없으면 로그인 form 으로 보낸다.
+        // 세션에 사용자가 없으면 로그인 form 으로 보낸다.
         if (loginUser == null) {
             return "redirect:/login";
         }
 
-        //세션이 유지되면 home 화면으로 이동한다.
+        // 세션이 유지되면 home 화면으로 이동한다.
         model.addAttribute("user", loginUser);
+
         return "home";
     }
 }

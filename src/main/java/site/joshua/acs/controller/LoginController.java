@@ -21,11 +21,17 @@ public class LoginController {
 
     private final LoginService loginService;
 
+    /**
+     * 로그인 화면 GET 요청
+     */
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
         return "login/loginForm";
     }
 
+    /**
+     * 로그인
+     */
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURL,
@@ -50,12 +56,16 @@ public class LoginController {
         return "redirect:" + redirectURL;
     }
 
+    /**
+     * 로그아웃
+     */
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
+
         return "redirect:/";
     }
 }

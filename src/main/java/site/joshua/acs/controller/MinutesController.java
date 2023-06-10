@@ -20,6 +20,9 @@ public class MinutesController {
 
     private final MinutesFileService minutesFileService;
 
+    /**
+     * 회의록 화면 GET 요청
+     */
     @GetMapping("/minutes")
     public String minutes(@ModelAttribute MinutesFileForm form, Model model) {
 
@@ -29,6 +32,9 @@ public class MinutesController {
         return "minutes/minutes";
     }
 
+    /**
+     * 회의록 추가
+     */
     @PostMapping("/minutes/new")
     public String uploadFile(@ModelAttribute MinutesFileForm form) throws IOException {
 
@@ -39,15 +45,23 @@ public class MinutesController {
         return "redirect:/minutes";
     }
 
+    /**
+     * 회의록 삭제
+     */
     @PostMapping("/minutes/{minutesFileId}/delete")
     public String deleteFile(@PathVariable("minutesFileId") Long minutesFileId) {
         minutesFileService.deleteMinutesFile(minutesFileId);
+
         return "redirect:/minutes";
     }
 
+    /**
+     * 회의록 다운로드
+     */
     @GetMapping("/minutes/{minutesFileId}/download")
     public ResponseEntity<byte[]> downloadFile(@PathVariable("minutesFileId") Long minutesFileId) throws IOException {
         log.info("minutesId={}", minutesFileId);
+
         return minutesFileService.downLoadFile(minutesFileId);
     }
 }

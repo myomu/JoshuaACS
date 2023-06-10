@@ -18,19 +18,51 @@
 
                 <h1 class="mt-4">출석 체크 수정</h1>
 
-                <div class="card mt-3 mb-4">
-                    <div class="card-body">
-                        출석체크 수정 화면입니다.
-                    </div>
-                </div>
+<!--                <div class="card mt-3 mb-4">-->
+<!--                    <div class="card-body">-->
+<!--                        출석체크 수정 화면입니다.-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <!--여기에 출석 리스트를 표시 -->
-                <p>출석인원</p>
-                <form class="mb-5" role="form" th:object="${attendanceForm}" method="post">
+                <form class="mb-5 mt-5" role="form" th:object="${attendanceForm}" method="post">
+                    <!--날짜 입력창-->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p>수동 날짜 입력</p>
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" id="disableSwitch">
+                                <label class="form-check-label" for="disableSwitch">날짜 입력<small> - 수동 입력을 하지 않을 시 기존 날짜를 기준으로 저장합니다.</small></label>
+                            </div>
+                            <!--날짜 Selector-->
+                            <div id="select-date" class="mt-2">
+                                <div class="row col-auto col-lg-6">
+                                    <div class="col">
+                                        <select class="form-select" id="year" name="year" disabled>
+                                            <option selected value="0">년도</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" id="month" name="month" disabled>
+                                            <option selected value="0">월</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" id="day" name="day" disabled>
+                                            <option selected value="0">일</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--날짜 Selector-->
+                        </div>
+                    </div>
+                    <!--날짜 입력창-->
+
                     <th:block th:each="group: ${groups}">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <p class="mt-2" th:text="${group.group_name}">조이름</p>
+                                <h5 class="mt-2" th:text="${group.group_name}">조이름</h5>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -56,6 +88,64 @@
         <footer th:replace="~{fragments/footer :: footer}"></footer>
     </div>
 </div>
+
+<script>
+    const disableSwitch = document.querySelector('#disableSwitch');
+    disableSwitch.onclick = function() {
+        if (this.checked) {
+            //체크 시 disabled 비활성화
+            document.querySelector('#year').disabled = false;
+            document.querySelector('#month').disabled = false;
+            document.querySelector('#day').disabled = false;
+        } else {
+            //체크 해제 시 disabled 활성화
+            document.querySelector('#year').disabled = true;
+            document.querySelector('#month').disabled = true;
+            document.querySelector('#day').disabled = true;
+        }
+    };
+
+    // 연도 select option 생성
+    let yearSelect = document.querySelector('#year');
+    let currentYear = new Date().getFullYear();
+    let startYear = currentYear - 3; // 시작 연도
+    let endYear = currentYear + 3; // 끝 연도
+
+    for (let year = startYear; year <= endYear; year++) {
+        let option = document.createElement('option');
+        option.text = year.toString() + '년';
+        option.value = year.toString();
+        yearSelect.appendChild(option);
+    }
+
+    // 월 select option 생성
+    let monthSelect = document.querySelector('#month');
+
+    for (let month = 1; month <= 12; month++) {
+        let option = document.createElement('option');
+        option.text = month.toString() + '월';
+        if (month < 10) {
+            option.value = "0"+month.toString();
+        } else {
+            option.value = month.toString();
+        }
+        monthSelect.appendChild(option);
+    }
+
+    // 일 select option 생성
+    let daySelect = document.querySelector('#day');
+
+    for (let day = 1; day <= 31; day++) {
+        let option = document.createElement('option');
+        option.text = day.toString() + '일';
+        if (day < 10) {
+            option.value = "0"+day.toString();
+        } else {
+            option.value = day.toString();
+        }
+        daySelect.appendChild(option);
+    }
+</script>
 
 </body>
 </html>

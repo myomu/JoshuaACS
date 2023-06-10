@@ -19,12 +19,19 @@ public class GroupController {
 
     private final GroupService groupService;
 
+    /**
+     * 조 추가 GET 요청
+     */
     @GetMapping("/groups/new")
     public String createForm(Model model) {
         model.addAttribute("groupForm", new GroupForm());
+
         return "groups/createGroupForm";
     }
 
+    /**
+     * 조 추가
+     */
     @PostMapping("/groups/new")
     public String create(@Valid GroupForm form, BindingResult result) {
 
@@ -39,6 +46,9 @@ public class GroupController {
         return "redirect:/groups";
     }
 
+    /**
+     * 조 목록 화면 GET 요청
+     */
     @GetMapping("/groups")
     public String groups(Model model) {
         List<Group> groupList = groupService.findGroups();
@@ -47,14 +57,9 @@ public class GroupController {
         return "groups/groupList";
     }
 
-    @PostMapping("/groups/{groupId}/delete")
-    public String deleteGroup(@PathVariable("groupId") Long groupId) {
-        System.out.println("정상 작동합니까?");
-        System.out.println("groupId = " + groupId);
-        groupService.deleteGroup(groupId);
-        return "redirect:/groups";
-    }
-
+    /**
+     * 조 수정 화면 GET 요청
+     */
     @GetMapping("/groups/{groupId}/edit")
     public String editMemberForm(Model model, @PathVariable("groupId") Long groupId) {
 
@@ -67,6 +72,9 @@ public class GroupController {
         return "groups/editGroupForm";
     }
 
+    /**
+     * 조 수정
+     */
     @PostMapping("/groups/{groupId}/edit")
     public String editMember(@PathVariable("groupId") Long groupId, @ModelAttribute("groupForm") MemberForm form) {
         groupService.editGroup(groupId, form.getName());
@@ -74,4 +82,13 @@ public class GroupController {
         return "redirect:/groups";
     }
 
+    /**
+     * 조 삭제
+     */
+    @PostMapping("/groups/{groupId}/delete")
+    public String deleteGroup(@PathVariable("groupId") Long groupId) {
+        groupService.deleteGroup(groupId);
+
+        return "redirect:/groups";
+    }
 }

@@ -10,6 +10,9 @@ import site.joshua.acs.interceptor.LoginCheckInterceptor;
 
 import java.util.List;
 
+/**
+ * Spring Interceptor 설정
+ */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 

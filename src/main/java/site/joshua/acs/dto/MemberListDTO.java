@@ -14,4 +14,5 @@ public class MemberListDTO {
         this.member = member;
         this.attendanceRate = attendanceRate;
     }
+
 }
