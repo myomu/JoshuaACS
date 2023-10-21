@@ -31,6 +31,7 @@
                                 <th>나이</th>
                                 <th>성별</th>
                                 <th>조이름</th>
+                                <th>출석일수</th>
                                 <th>출석률</th>
                                 <th data-sortable="false">관리</th>
                             </tr>
@@ -41,6 +42,7 @@
                                 <th>나이</th>
                                 <th>성별</th>
                                 <th>조이름</th>
+                                <th>출석일수</th>
                                 <th>출석률</th>
                                 <th>관리</th>
                             </tr>
@@ -52,6 +54,7 @@
                                 <td th:text="${memberList.member.age}">나이</td>
                                 <td th:text="${memberList.member.gender.description}">성별</td>
                                 <td th:text="${memberList.member.group.group_name}">조이름</td>
+                                <td th:text="${memberList.noa}">출석일수</td>
                                 <td><span th:text="${memberList.attendanceRate}"></span>%</td>
                                 <td>
 

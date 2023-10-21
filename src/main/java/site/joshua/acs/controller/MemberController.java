@@ -48,7 +48,7 @@ public class MemberController {
             // 출석률을 계산하여 member 객체와 함께 MemberListDTO 에 저장시킨다.
             // 출석 날짜를 기준으로 나누기 때문에 findNoDuplicateDate()로 중복없는 날짜를 가져와 나눠준다.
             Double rate = Math.round((double) count / attendanceDateTime.size() * 10000) / 100.0;
-            memberListDTOS.add(new MemberListDTO(member, rate));
+            memberListDTOS.add(new MemberListDTO(member, rate, count));
         }
         model.addAttribute("memberListDTO", memberListDTOS);
 

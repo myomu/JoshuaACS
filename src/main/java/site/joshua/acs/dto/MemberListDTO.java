@@ -9,10 +9,12 @@ public class MemberListDTO {
 
     private Member member;
     private Double attendanceRate;
+    private int noa; //numberOfAttendance
 
-    public MemberListDTO(Member member, Double attendanceRate) {
+    public MemberListDTO(Member member, Double attendanceRate, int noa) {
         this.member = member;
         this.attendanceRate = attendanceRate;
+        this.noa = noa;
     }
 
 }
